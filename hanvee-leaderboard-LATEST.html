@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hanvee · Stake Leaderboard</title>
+<meta name="description" content="Hanvee official Stake.com monthly leaderboard — live rankings, wagered amounts, and prize distribution.">
+<meta property="og:title" content="Hanvee · Stake Leaderboard">
+<meta property="og:description" content="Live monthly leaderboard for Hanvee on Stake.com. $1,000 prize pool.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Orbitron:wght@400;500;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#07080d;
+  --font-d:'Bebas Neue',sans-serif;
+  --font-u:'Rajdhani',sans-serif;
+  --font-m:'Orbitron',sans-serif;
+  --refresh:30000;
+
+/* ═══════════════════════════════════════════
+   OKIE.DIGITAL BRAND — top bar + footer
+═══════════════════════════════════════════ */
+--font-s:'DM Sans',sans-serif;
+
+/* top bar */
+}
+
+.okie-top-bar{width:100%;z-index:20;position:relative;padding:13px 24px 10px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.04);}
+.okie-top-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(160,100,255,.06) 0%,transparent 100%);pointer-events:none;}
+.okie-made-by{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.okie-made-line{font-size:9px;letter-spacing:3px;font-style:italic;font-weight:300;color:rgba(200,170,255,.45);text-transform:uppercase;font-family:'DM Sans',sans-serif;}
+.okie-logo-wrap{display:flex;align-items:center;gap:8px;}
+.okie-star-l{font-size:13px;color:#fff;text-shadow:0 0 4px #fff,0 0 10px rgba(200,160,255,1),0 0 22px rgba(170,120,255,.9),0 0 45px rgba(140,80,255,.7),0 0 80px rgba(120,50,240,.5);animation:starPulse 3s ease-in-out infinite;}
+.okie-logo-text{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 28px rgba(210,180,255,.95),0 0 55px rgba(180,140,255,.85),0 0 90px rgba(150,100,255,.65),0 0 140px rgba(120,60,240,.45);animation:okieMoon 3s ease-in-out infinite;}
+.okie-logo-text .odot{color:rgba(200,160,255,.8);}
+.okie-logo-text .otm{font-size:8px;vertical-align:super;color:rgba(200,170,255,.6);font-weight:400;letter-spacing:0;text-shadow:0 0 6px rgba(180,140,255,.8);}
+.okie-star-r{font-size:18px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px rgba(220,180,255,1),0 0 28px rgba(190,140,255,.9),0 0 55px rgba(160,100,255,.7),0 0 100px rgba(130,60,250,.5);animation:starPulse 3s ease-in-out infinite .8s;display:inline-block;}
+@keyframes okieMoon{0%,100%{filter:brightness(1) drop-shadow(0 0 6px rgba(180,140,255,.5));}50%{filter:brightness(1.3) drop-shadow(0 0 18px rgba(210,170,255,.8));}}
+@keyframes starPulse{0%,100%{transform:scale(1);filter:brightness(1);}50%{transform:scale(1.15);filter:brightness(1.4) drop-shadow(0 0 12px rgba(200,160,255,.9));}}
+
+/* Hanvee™ title tm */
+.title-tm{font-family:'Orbitron',sans-serif;font-size:12px;vertical-align:super;color:#fff;text-shadow:0 0 4px #fff,0 0 10px rgba(220,200,255,.9),0 0 22px rgba(180,150,255,.7),0 0 40px rgba(150,100,255,.5);animation:mG 4s ease-in-out infinite;letter-spacing:0;margin-left:2px;}
+.title-wrap{display:inline-flex;align-items:flex-start;justify-content:center;}
+
+/* footer */
+.okie-footer{width:100%;z-index:20;position:relative;margin-top:40px;padding:20px 24px 28px;border-top:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;gap:10px;}
+.okie-footer::before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(140,80,255,.05) 0%,transparent 100%);pointer-events:none;}
+.okie-footer-love{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:2px;font-style:italic;font-weight:300;color:rgba(200,170,255,.5);text-shadow:0 0 8px rgba(160,120,255,.3);}
+.okie-footer-love .heart{color:#fff;text-shadow:0 0 6px #fff,0 0 14px rgba(255,150,200,.8),0 0 28px rgba(255,100,180,.5);animation:heartbeat 2s ease-in-out infinite;display:inline-block;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}15%{transform:scale(1.22);}30%{transform:scale(1);}45%{transform:scale(1.12);}60%{transform:scale(1);}}
+.okie-footer-logo{display:flex;align-items:center;gap:10px;}
+.okie-footer-star-l{font-size:12px;color:#fff;text-shadow:0 0 4px #fff,0 0 10px rgba(200,160,255,1),0 0 22px rgba(170,120,255,.9),0 0 45px rgba(140,80,255,.7);animation:starPulse 3s ease-in-out infinite .3s;}
+.okie-footer-text{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 26px rgba(210,180,255,.95),0 0 50px rgba(180,140,255,.85),0 0 85px rgba(150,100,255,.65),0 0 130px rgba(120,60,240,.45);animation:okieMoon 3s ease-in-out infinite;}
+.okie-footer-text .odot{color:rgba(200,160,255,.8);}
+.okie-footer-text .otm{font-size:8px;vertical-align:super;color:rgba(200,170,255,.6);font-weight:400;letter-spacing:0;text-shadow:0 0 6px rgba(180,140,255,.8);}
+.okie-footer-star-r{font-size:18px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px rgba(220,180,255,1),0 0 28px rgba(190,140,255,.9),0 0 55px rgba(160,100,255,.7),0 0 100px rgba(130,60,250,.5);animation:starPulse 3s ease-in-out infinite;display:inline-block;}
+.okie-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(160,120,255,.3),transparent);}
+.okie-copy{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1px;color:rgba(160,130,200,.3);font-weight:300;text-align:center;line-height:1.7;}
+
+/* ── PRIZE DISTRIBUTION ──────────────────────────
+   Matches leaderboard.js exactly:
+   1st $250 · 2nd $200 · 3rd $150 · 4th $75 ...
+   Total pool: $1000
+─────────────────────────────────────────────── */
+
+body{
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  font-family:var(--font-u);
+  overflow-x:hidden;
+  padding-bottom:70px;
+  cursor:default;
+}
+
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#arc-canvas{position:fixed;inset:0;z-index:50;pointer-events:none;}
+#ripple-canvas{position:fixed;inset:0;z-index:8;pointer-events:none;}
+
+/* ─── HEADER ─────────────────────────────────── */
+.scene{
+  position:relative;z-index:10;
+  display:flex;flex-direction:column;align-items:center;
+  padding:28px 30px 0;width:100%;max-width:1020px;
+}
+.brand{
+  font-family:var(--font-d);font-size:15px;letter-spacing:8px;color:#fff;
+  text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 28px rgba(220,200,255,.95),0 0 55px rgba(190,160,255,.8),0 0 90px rgba(160,120,255,.6);
+  margin-bottom:4px;text-align:center;animation:mG 4s ease-in-out infinite;
+}
+.title{
+  font-family:var(--font-d);font-size:66px;letter-spacing:6px;color:#fff;
+  text-shadow:0 0 6px #fff,0 0 16px #fff,0 0 35px rgba(230,210,255,1),0 0 70px rgba(200,170,255,.9),0 0 120px rgba(170,120,255,.7),0 0 180px rgba(140,80,250,.5),0 0 250px rgba(110,50,220,.3);
+  text-align:center;line-height:1;margin-bottom:5px;animation:mG 4s ease-in-out infinite;
+}
+.subtitle{
+  font-size:11px;letter-spacing:4px;color:#f0eaff;
+  text-shadow:0 0 4px #fff,0 0 12px rgba(230,210,255,.95),0 0 28px rgba(190,150,255,.8),0 0 58px rgba(160,100,255,.6);
+  margin-bottom:10px;text-align:center;font-family:var(--font-m);
+  animation:mG 4s ease-in-out infinite .6s;
+}
+@keyframes mG{
+  0%,100%{filter:brightness(1) drop-shadow(0 0 6px rgba(200,180,255,.3));}
+  50%{filter:brightness(1.15) drop-shadow(0 0 14px rgba(220,200,255,.5));}
+}
+
+/* prize pool badge */
+.prize-pool-badge{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 20px;border-radius:30px;margin-bottom:16px;
+  background:rgba(255,200,0,.08);border:1px solid rgba(255,200,0,.25);box-shadow:0 0 20px rgba(255,190,0,.18),inset 0 0 12px rgba(255,200,0,.08);
+}
+.prize-pool-amount{
+  font-family:var(--font-d);font-size:22px;color:#fff;letter-spacing:1px;
+  text-shadow:0 0 6px #fff,0 0 16px rgba(255,220,80,.9),0 0 32px rgba(255,180,0,.6);
+  animation:mGG 4s ease-in-out infinite;
+}
+.prize-pool-lbl{
+  font-family:var(--font-m);font-size:9px;letter-spacing:2px;
+  color:rgba(255,220,120,.6);
+}
+@keyframes mGG{0%,100%{opacity:.92;}50%{opacity:1;}}
+
+/* live / status row */
+.status-row{display:flex;align-items:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#00ff88;box-shadow:0 0 8px #00ff88;animation:ldot 1.5s ease-in-out infinite;}
+@keyframes ldot{0%,100%{opacity:1}50%{opacity:.3}}
+.live-txt{font-family:var(--font-m);font-size:9px;letter-spacing:2px;color:rgba(0,255,136,.7);}
+.status-sep{color:rgba(255,255,255,.1);font-size:11px;}
+.last-update{font-family:var(--font-m);font-size:9px;color:rgba(255,255,255,.2);}
+.entry-count{font-family:var(--font-m);font-size:9px;color:rgba(200,180,255,.4);}
+
+/* ─── PODIUM (top 3) ─────────────────────────── */
+.podium-row{display:flex;align-items:flex-end;gap:0;margin-bottom:44px;flex-wrap:nowrap;justify-content:space-between;width:100%;padding:0 16px;}
+.card{position:relative;border-radius:16px;overflow:visible;will-change:transform;flex-shrink:0;}
+.card-backlight{position:absolute;border-radius:50%;pointer-events:none;z-index:-1;filter:blur(30px);}
+.card-inner{border-radius:16px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 20px 22px;}
+.spark-canvas{position:absolute;inset:0;pointer-events:none;z-index:5;border-radius:16px;}
+
+/* SILVER */
+.card-silver{width:190px;flex-shrink:0;}
+.card-silver .card-backlight{background:radial-gradient(ellipse,rgba(180,210,255,.72) 0%,rgba(140,170,240,.42) 40%,transparent 75%);width:270px;height:350px;left:50%;top:50%;transform:translate(-50%,-50%);animation:blS 4s ease-in-out infinite;}
+@keyframes blS{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:.82;transform:translate(-50%,-50%) scale(1.09);}}
+.card-silver .card-inner{background:linear-gradient(160deg,#1c1e28 0%,#12141e 50%,#0c0e16 100%);border:1px solid rgba(220,230,255,.4);min-height:238px;}
+.card-silver .card-glow{position:absolute;inset:-1px;border-radius:17px;background:linear-gradient(135deg,rgba(220,230,255,.14),transparent 55%);pointer-events:none;}
+.card-silver .card-shine{position:absolute;inset:0;border-radius:16px;pointer-events:none;z-index:2;background:linear-gradient(130deg,rgba(255,255,255,.08) 0%,transparent 45%);}
+.card-silver .rank-badge{background:linear-gradient(135deg,#c8d4e8,#fff,#a0b4cc,#e8eef8);color:#0a0d18;box-shadow:0 2px 18px rgba(200,220,255,.5),0 0 0 3px rgba(220,235,255,.14),0 0 30px rgba(190,210,255,.4);}
+.card-silver .avatar{background:rgba(200,215,255,.08);border:2px solid rgba(220,235,255,.3);color:rgba(230,240,255,.6);}
+.card-silver .username{font-size:16px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 28px rgba(220,210,255,.95),0 0 55px rgba(190,170,255,.75);animation:mG 4s ease-in-out infinite .2s;}
+.card-silver .amount{font-size:21px;color:#fff;text-shadow:0 0 5px #fff,0 0 14px #fff,0 0 32px rgba(230,220,255,.95),0 0 65px rgba(200,180,255,.8);animation:mG 4s ease-in-out infinite .4s;}
+.card-silver .reward-amount{font-size:31px;color:#fff;text-shadow:0 0 6px #fff,0 0 16px #fff,0 0 36px rgba(230,220,255,1),0 0 70px rgba(200,180,255,.85);animation:mG 4s ease-in-out infinite .6s;}
+.card-silver .label,.card-silver .reward-label{color:rgba(220,225,255,.65);font-size:9px;text-shadow:0 0 6px rgba(200,190,255,.5);}
+.card-silver .divider-line{background:rgba(200,215,255,.12);}
+
+/* GOLD */
+.card-gold{width:224px;flex-shrink:0;margin-bottom:34px;}
+.card-gold .card-backlight{background:radial-gradient(ellipse,rgba(255,220,60,1) 0%,rgba(255,175,0,.75) 35%,rgba(255,130,0,.35) 60%,transparent 80%);width:420px;height:520px;left:50%;top:50%;transform:translate(-50%,-50%);animation:blG 4s ease-in-out infinite;filter:blur(28px);}
+@keyframes blG{0%,100%{opacity:.85;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
+.card-gold .card-inner{background:linear-gradient(160deg,#130f00 0%,#0d0a00 50%,#080700 100%);border:1px solid rgba(255,210,60,.35);min-height:288px;}
+.card-gold .card-glow{position:absolute;inset:-2px;border-radius:18px;background:linear-gradient(135deg,rgba(255,200,0,.2),transparent 55%);pointer-events:none;}
+.card-gold .outer-glow{position:absolute;inset:-20px;border-radius:30px;background:radial-gradient(ellipse,rgba(255,185,0,.13) 0%,transparent 70%);pointer-events:none;z-index:-1;}
+.card-gold .rank-badge{background:linear-gradient(135deg,#c8920a,#ffdd00,#e8a800,#ffe566);color:#1a1000;box-shadow:0 2px 22px rgba(255,200,0,.55),0 0 0 3px rgba(255,210,60,.18),0 0 40px rgba(255,190,0,.45);}
+.card-gold .avatar{background:rgba(255,200,0,.08);border:2px solid rgba(255,200,0,.22);color:rgba(255,220,100,.5);}
+.card-gold .username{font-size:16px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 28px rgba(255,240,180,.95),0 0 55px rgba(255,210,100,.8);animation:mG 4s ease-in-out infinite;}
+.card-gold .amount{font-size:21px;color:#fff;text-shadow:0 0 5px #fff,0 0 14px #fff,0 0 32px rgba(255,245,190,.95),0 0 65px rgba(255,215,80,.85);}
+.card-gold .reward-amount{font-size:40px;color:#fff;text-shadow:0 0 6px #fff,0 0 18px #fff,0 0 40px rgba(255,245,190,1),0 0 80px rgba(255,215,80,.9),0 0 130px rgba(255,180,30,.7);}
+.card-gold .label,.card-gold .reward-label{color:rgba(255,230,160,.65);font-size:9px;text-shadow:0 0 6px rgba(255,200,80,.5);}
+.card-gold .divider-line{background:rgba(255,200,0,.1);}
+.gold-crown{position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-size:30px;filter:drop-shadow(0 0 12px rgba(255,200,0,.9)) drop-shadow(0 0 24px rgba(255,240,150,.6));animation:cF 3s ease-in-out infinite;z-index:21;}
+@keyframes cF{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+.streak-ring{position:absolute;inset:-8px;border-radius:24px;border:1px solid transparent;background:linear-gradient(transparent,transparent) padding-box,linear-gradient(135deg,rgba(255,200,0,.45),transparent 40%,rgba(200,130,255,.35),transparent 80%) border-box;pointer-events:none;z-index:7;animation:rP 2.5s ease-in-out infinite;}
+@keyframes rP{0%,100%{opacity:.7}50%{opacity:.95}}
+
+/* BRONZE */
+.card-bronze{width:190px;flex-shrink:0;}
+.card-bronze .card-backlight{background:radial-gradient(ellipse,rgba(210,130,50,.67) 0%,rgba(180,100,20,.4) 40%,transparent 75%);width:270px;height:350px;left:50%;top:50%;transform:translate(-50%,-50%);animation:blS 4s ease-in-out infinite 0.5s;}
+.card-bronze .card-inner{background:linear-gradient(160deg,#120a02 0%,#0c0702 60%,#080502 100%);border:1px solid rgba(200,130,60,.3);min-height:238px;}
+.card-bronze .card-glow{position:absolute;inset:-1px;border-radius:17px;background:linear-gradient(135deg,rgba(200,120,50,.14),transparent 60%);pointer-events:none;}
+.card-bronze .rank-badge{background:linear-gradient(135deg,#8b5c28,#d4874a,#a0622e,#e09858);color:#1a0e04;box-shadow:0 2px 18px rgba(210,130,50,.5),0 0 0 3px rgba(200,130,60,.14),0 0 30px rgba(200,120,40,.4);}
+.card-bronze .avatar{background:rgba(200,120,50,.08);border:2px solid rgba(200,130,60,.22);color:rgba(220,160,100,.5);}
+.card-bronze .username{font-size:16px;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #fff,0 0 28px rgba(255,230,200,.95),0 0 55px rgba(240,180,110,.8);animation:mG 4s ease-in-out infinite .3s;}
+.card-bronze .amount{font-size:21px;color:#fff;text-shadow:0 0 5px #fff,0 0 14px #fff,0 0 32px rgba(255,230,190,.95),0 0 65px rgba(240,175,90,.85);animation:mGB 4s ease-in-out infinite .4s;}
+.card-bronze .reward-amount{font-size:31px;color:#fff;text-shadow:0 0 6px #fff,0 0 16px #fff,0 0 36px rgba(255,230,190,1),0 0 70px rgba(240,180,90,.9);animation:mGB 4s ease-in-out infinite .8s;}
+.card-bronze .label,.card-bronze .reward-label{color:rgba(240,200,150,.65);font-size:9px;text-shadow:0 0 6px rgba(220,160,80,.5);}
+.card-bronze .divider-line{background:rgba(200,130,60,.1);}
+@keyframes mGB{0%,100%{filter:brightness(1) drop-shadow(0 0 8px rgba(220,160,60,.4));}50%{filter:brightness(1.35) drop-shadow(0 0 20px rgba(240,180,80,.65));}}
+
+/* shared card */
+.rank-badge{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:22px;margin-bottom:12px;position:relative;z-index:6;flex-shrink:0;}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:22px;margin-bottom:10px;position:relative;z-index:6;flex-shrink:0;}
+.username{font-family:var(--font-u);font-weight:700;font-size:15px;letter-spacing:1px;margin-bottom:12px;text-align:center;position:relative;z-index:6;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.stat-block{text-align:center;margin-bottom:8px;position:relative;z-index:6;width:100%;}
+.label{letter-spacing:2px;font-family:var(--font-m);text-transform:uppercase;margin-bottom:2px;font-size:9px;}
+.amount{font-family:var(--font-d);letter-spacing:1px;}
+.divider-line{width:60%;height:1px;margin:8px auto;position:relative;z-index:6;}
+.reward-label{letter-spacing:2px;font-family:var(--font-m);margin-bottom:3px;position:relative;z-index:6;font-size:9px;}
+.reward-amount{font-family:var(--font-d);letter-spacing:1px;position:relative;z-index:6;}
+
+/* ─── SEARCH BAR ─────────────────────────────── */
+.search-wrap{width:100%;max-width:680px;margin:0 auto 14px;position:relative;}
+.search-input{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);border-radius:8px;
+  color:#fff;font-family:var(--font-m);font-size:11px;letter-spacing:1px;
+  padding:10px 16px 10px 38px;outline:none;transition:border-color .2s;
+-webkit-appearance:none;}
+.search-input:focus{border-color:rgba(180,140,255,.5);box-shadow:0 0 0 3px rgba(150,110,255,.12),0 0 18px rgba(150,110,255,.2);}
+.search-input::placeholder{color:rgba(255,255,255,.2);}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.2);font-size:14px;pointer-events:none;}
+
+/* ─── RANKS 4+ TABLE ─────────────────────────── */
+.lb-section{width:100%;max-width:680px;margin:0 auto;}
+.lb-header{
+  display:flex;align-items:center;padding:0 18px 8px;
+  font-family:var(--font-m);font-size:8px;letter-spacing:2px;
+  color:rgba(255,255,255,.18);text-transform:uppercase;
+}
+.lb-header-rank{min-width:42px;}
+.lb-header-user{flex:1;}
+.lb-header-wager{min-width:110px;text-align:right;padding-right:14px;}
+.lb-header-prize{min-width:70px;text-align:right;}
+
+.lb-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 18px;margin-bottom:5px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;position:relative;overflow:hidden;
+  transition:background .2s,border-color .2s;
+}
+.lb-row:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);}
+/* rank colored left border */
+.lb-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:10px 0 0 10px;}
+.lb-row:nth-child(1)::before{background:linear-gradient(180deg,#a0aec0,#718096);}
+.lb-row:nth-child(2)::before{background:rgba(255,255,255,.12);}
+.lb-row:nth-child(3)::before{background:rgba(255,255,255,.09);}
+.lb-row:nth-child(4)::before{background:rgba(255,255,255,.07);}
+.lb-row:nth-child(n+5)::before{background:rgba(255,255,255,.04);}
+
+.lb-rank{
+  font-family:var(--font-d);font-size:20px;
+  color:rgba(255,255,255,.3);min-width:30px;text-align:center;flex-shrink:0;
+}
+.lb-avatar{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-size:14px;color:rgba(255,255,255,.4);
+}
+.lb-user{flex:1;min-width:0;}
+.lb-username{
+  font-family:var(--font-u);font-weight:700;font-size:15px;color:#fff;
+  text-shadow:0 0 4px #fff,0 0 10px rgba(220,200,255,.5),0 0 22px rgba(180,150,255,.35);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.lb-sublbl{font-family:var(--font-m);font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,.2);margin-top:1px;}
+.lb-right{text-align:right;flex-shrink:0;min-width:100px;}
+.lb-wagered{
+  font-family:var(--font-d);font-size:17px;color:#fff;
+  text-shadow:0 0 4px #fff,0 0 10px rgba(220,200,255,.45),0 0 20px rgba(180,140,255,.3);
+}
+.lb-prize{
+  font-family:var(--font-m);font-size:10px;letter-spacing:1px;
+  color:rgba(150,255,150,.85);text-shadow:0 0 6px rgba(100,255,90,.5),0 0 14px rgba(80,230,70,.3);
+  margin-top:2px;
+}
+.lb-no-prize{color:rgba(255,255,255,.15);font-family:var(--font-m);font-size:9px;}
+/* wagered progress bar */
+.lb-bar-wrap{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.04);}
+.lb-bar{height:100%;background:linear-gradient(90deg,rgba(180,140,255,.8),rgba(140,100,255,.3),transparent);box-shadow:0 0 6px rgba(160,120,255,.5);transition:width 1s ease;}
+/* no results */
+.lb-empty{
+  font-family:var(--font-m);font-size:11px;letter-spacing:2px;
+  color:rgba(255,255,255,.2);text-align:center;padding:30px;
+}
+
+/* ─── COUNTDOWN ──────────────────────────────── */
+.timer-block{margin-top:36px;text-align:center;position:relative;z-index:10;}
+.timer-label{
+  font-size:9px;letter-spacing:3px;font-family:var(--font-m);margin-bottom:10px;
+  color:#fff;text-shadow:0 0 4px #fff,0 0 12px rgba(230,210,255,.9),0 0 28px rgba(190,150,255,.7);
+  animation:mG 4s ease-in-out infinite 1s;
+}
+.timer-digits{display:flex;gap:10px;align-items:center;justify-content:center;}
+.time-unit{text-align:center;}
+.time-num{
+  font-family:var(--font-d);font-size:36px;letter-spacing:1px;line-height:1;color:#fff;
+  text-shadow:0 0 5px #fff,0 0 14px #fff,0 0 32px rgba(230,210,255,.95),0 0 65px rgba(190,150,255,.8);
+  animation:mG 4s ease-in-out infinite;
+}
+.time-lbl{font-size:8px;letter-spacing:2px;color:rgba(220,210,255,.4);font-family:var(--font-m);}
+.time-sep{font-family:var(--font-d);font-size:30px;padding-bottom:10px;color:#fff;text-shadow:0 0 5px #fff,0 0 14px rgba(200,180,255,.8);animation:mGG 4s ease-in-out infinite;}
+
+/* ─── LOADING / ERROR STATES ─────────────────── */
+.state-msg{
+  font-family:var(--font-m);font-size:11px;letter-spacing:2px;
+  color:rgba(255,255,255,.3);text-align:center;padding:50px 20px;
+  width:100%;
+}
+.state-msg.error{color:rgba(255,100,100,.5);}
+.state-msg .state-sub{display:block;font-size:9px;opacity:.6;margin-top:8px;letter-spacing:1px;}
+
+/* stake watermark */
+
+/* loading spinner */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.1);border-top-color:rgba(200,180,255,.6);border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* CORS error hint */
+.cors-hint{font-size:9px;color:rgba(255,150,100,.5);margin-top:6px;letter-spacing:1px;}
+.stake-brand{
+  position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-d);font-size:11px;letter-spacing:5px;
+  color:rgba(200,180,255,.25);z-index:20;
+  text-shadow:0 0 8px rgba(160,120,255,.3);
+}
+
+/* ═══════════════════════════════════════════════════
+   UNIVERSAL MOON GLOW — every text element white + glow
+═══════════════════════════════════════════════════ */
+
+/* Sub-labels on cards */
+.label,.reward-label{
+  color:rgba(255,255,255,.7)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+
+/* Status bar elements */
+.live-txt{
+  color:#fff!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+  animation:mG 4s ease-in-out infinite;
+}
+.last-update{
+  color:rgba(255,255,255,.85)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+  animation:mG 4s ease-in-out infinite;
+}
+.entry-count{
+  color:rgba(255,255,255,.85)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+  animation:mG 4s ease-in-out infinite;
+}
+.status-sep{
+  color:rgba(255,255,255,.5)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+
+/* Prize pool */
+.prize-pool-lbl{
+  color:rgba(255,255,255,.8)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+
+/* Leaderboard table */
+.lb-header,.lb-header-rank,.lb-header-user,.lb-header-wager,.lb-header-prize{
+  color:rgba(255,255,255,.7)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+.lb-rank{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+.lb-avatar{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+.lb-sublbl{
+  color:rgba(255,255,255,.6)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+.lb-no-prize{
+  color:rgba(255,255,255,.55)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+
+/* Timer labels */
+.time-lbl{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+
+/* Okie top bar */
+.okie-made-line{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+  animation:mG 4s ease-in-out infinite;
+}
+
+/* Okie footer */
+.okie-footer-love{
+  color:rgba(255,255,255,.8)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+  animation:mG 4s ease-in-out infinite;
+}
+.okie-copy{
+  color:rgba(255,255,255,.55)!important;
+  text-shadow:0 0 3px rgba(255,255,255,.8),0 0 8px rgba(220,210,255,.7),0 0 18px rgba(190,160,255,.55),0 0 36px rgba(160,120,255,.35)!important;
+}
+
+/* Silver/Bronze/Gold card sub-labels */
+.card-silver .label,.card-silver .reward-label{
+  color:rgba(255,255,255,.7)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+.card-gold .label,.card-gold .reward-label{
+  color:rgba(255,255,255,.7)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+.card-bronze .label,.card-bronze .reward-label{
+  color:rgba(255,255,255,.7)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+
+/* Divider lines glow */
+.divider-line{
+  background:rgba(255,255,255,.25)!important;
+  box-shadow:0 0 6px rgba(200,180,255,.4),0 0 14px rgba(170,140,255,.25)!important;
+}
+
+/* Avatar letters */
+.avatar{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+.lb-avatar{
+  color:rgba(255,255,255,.75)!important;
+  text-shadow:0 0 3px #fff,0 0 8px #fff,0 0 18px rgba(220,200,255,.9),0 0 38px rgba(190,160,255,.7),0 0 70px rgba(160,120,255,.5)!important;
+}
+
+
+/* ── ENHANCED TEXT READABILITY ─────────────────────────────────────
+   Stronger shadows + backdrop on all text so nothing gets lost
+   against the animated backgrounds / lightning / particles
+─────────────────────────────────────────────────────────────────── */
+
+/* card inner gets a subtle dark vignette to ground text */
+.card-inner::after {
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.18) 100%);
+  border-radius:16px;
+}
+
+/* all text in card-inner sits above the vignette */
+.card-inner > * { position:relative;z-index:3; }
+
+/* username — heavier shadow stack */
+.username {
+  font-size:16px!important;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.9),
+    0 0 4px #fff,
+    0 0 14px #fff,
+    0 0 30px rgba(220,200,255,.95),
+    0 0 60px rgba(190,160,255,.8)!important;
+}
+
+/* wagered amount */
+.amount {
+  text-shadow:
+    0 1px 4px rgba(0,0,0,.95),
+    0 0 5px #fff,
+    0 0 16px #fff,
+    0 0 34px rgba(220,200,255,.95),
+    0 0 68px rgba(190,160,255,.8)!important;
+  font-size:23px!important;
+}
+
+/* reward amount — biggest, needs the most pop */
+.reward-amount {
+  text-shadow:
+    0 2px 6px rgba(0,0,0,.95),
+    0 0 6px #fff,
+    0 0 18px #fff,
+    0 0 40px rgba(230,210,255,1),
+    0 0 80px rgba(200,170,255,.9),
+    0 0 130px rgba(170,120,255,.7)!important;
+}
+
+/* sub-labels on cards */
+.label, .reward-label {
+  font-size:9px!important;
+  letter-spacing:2.5px!important;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.9),
+    0 0 6px rgba(255,255,255,.7),
+    0 0 14px rgba(210,190,255,.6)!important;
+  color:rgba(255,255,255,.9)!important;
+}
+
+/* divider line — more visible */
+.divider-line {
+  opacity:.6!important;
+  height:1.5px!important;
+}
+
+/* table rows — dark bg so text always pops */
+.lb-row {
+  background:rgba(10,8,20,.55)!important;
+  border:1px solid rgba(255,255,255,.1)!important;
+  backdrop-filter:blur(4px);
+}
+.lb-username {
+  font-size:15px!important;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.9),
+    0 0 5px #fff,
+    0 0 12px rgba(220,200,255,.7)!important;
+}
+.lb-wagered {
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.9),
+    0 0 5px #fff,
+    0 0 12px rgba(220,200,255,.6)!important;
+  font-size:17px!important;
+}
+.lb-rank {
+  font-size:20px!important;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.9),
+    0 0 5px rgba(255,255,255,.6)!important;
+}
+
+/* status bar — readable over animated bg */
+.live-txt, .last-update, .entry-count {
+  text-shadow:
+    0 1px 3px rgba(0,0,0,.8),
+    0 0 4px #fff,
+    0 0 10px rgba(220,200,255,.7)!important;
+}
+
+/* timer digits — most important number on page */
+.time-num {
+  text-shadow:
+    0 2px 6px rgba(0,0,0,.95),
+    0 0 6px #fff,
+    0 0 18px #fff,
+    0 0 38px rgba(230,210,255,.95),
+    0 0 75px rgba(190,150,255,.85),
+    0 0 120px rgba(160,110,255,.65)!important;
+}
+
+/* okie top bar and footer — strong but not overwhelming */
+.okie-logo-text {
+  text-shadow:
+    0 1px 4px rgba(0,0,0,.8),
+    0 0 5px #fff,
+    0 0 14px #fff,
+    0 0 32px rgba(210,180,255,.95),
+    0 0 65px rgba(180,140,255,.85),
+    0 0 110px rgba(150,100,255,.65)!important;
+}
+.okie-footer-text {
+  text-shadow:
+    0 1px 4px rgba(0,0,0,.8),
+    0 0 5px #fff,
+    0 0 14px #fff,
+    0 0 30px rgba(210,180,255,.95),
+    0 0 60px rgba(180,140,255,.85)!important;
+}
+
+/* prize pool amount */
+.prize-pool-amount {
+  text-shadow:
+    0 1px 4px rgba(0,0,0,.85),
+    0 0 6px #fff,
+    0 0 18px rgba(255,220,80,.95),
+    0 0 36px rgba(255,180,0,.7)!important;
+}
+
+/* search input */
+.search-input {
+  background:rgba(10,8,20,.65)!important;
+  border:1px solid rgba(255,255,255,.15)!important;
+  font-size:12px!important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — mobile & tablet
+═══════════════════════════════════════════════════════ */
+
+/* Tablet: 601–900px */
+@media (max-width:900px) {
+  .scene { padding:18px 16px 0; }
+  .title { font-size:46px; }
+  .podium-row {
+    padding:0 8px;
+    gap:0;
+  }
+  .card-gold   { width:190px; }
+  .card-silver { width:160px; }
+  .card-bronze { width:160px; }
+  .card-gold .card-inner   { min-height:240px; padding:18px 14px 16px; }
+  .card-silver .card-inner { min-height:200px; padding:16px 12px 14px; }
+  .card-bronze .card-inner { min-height:200px; padding:16px 12px 14px; }
+  .card-gold   .reward-amount { font-size:30px; }
+  .card-silver .reward-amount { font-size:24px; }
+  .card-bronze .reward-amount { font-size:24px; }
+  .card-gold   .amount { font-size:17px; }
+  .card-silver .amount { font-size:16px; }
+  .card-bronze .amount { font-size:16px; }
+  .gold-crown { font-size:22px; top:-22px; }
+  .lb-section, .search-wrap { max-width:100%; }
+  .lb-header-wager { min-width:80px; }
+  .lb-header-prize { min-width:55px; }
+  .lb-right { min-width:75px; }
+  .lb-wagered { font-size:14px; }
+  .lb-prize { font-size:9px; }
+}
+
+/* Mobile: ≤600px — stack cards vertically, silver on top, gold center, bronze bottom */
+@media (max-width:600px) {
+  .scene { padding:14px 10px 0; }
+  .title { font-size:36px; letter-spacing:3px; }
+  .subtitle { font-size:10px; letter-spacing:2px; }
+  .prize-pool-amount { font-size:17px; }
+  .prize-pool-lbl { font-size:10px; }
+
+  /* Stack: gold full-width first, then silver, then bronze */
+  .podium-row {
+    flex-direction:column;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:18px;
+    padding:32px 0 0;
+    width:100%;
+  }
+
+  /* GOLD: full width, same vertical layout as silver/bronze */
+  .card-gold {
+    order:1;
+    width:100%;
+    max-width:100%;
+  }
+  .card-gold .card-inner {
+    flex-direction:column;
+    align-items:center;
+    min-height:280px;
+    padding:22px 18px 20px;
+  }
+  .card-gold .rank-badge  { margin-bottom:10px; }
+  .card-gold .avatar      { margin-bottom:8px; width:50px; height:50px; font-size:20px; }
+  .card-gold .username    { font-size:17px; max-width:90%; margin-bottom:10px; text-align:center; white-space:normal; overflow:visible; }
+  .card-gold .stat-block  { width:100%; text-align:center; margin-bottom:8px; }
+  .card-gold .amount      { font-size:21px; }
+  .card-gold .label       { text-align:center; }
+  .card-gold .divider-line  { display:block; width:60%; height:1px; margin:8px auto; }
+  .card-gold .reward-label  { display:block; margin-bottom:3px; }
+  .card-gold .reward-amount { font-size:40px; width:auto; text-align:center; padding-top:0; order:unset; }
+  .gold-crown { font-size:24px; top:-26px; }
+  .streak-ring { inset:-6px; }
+  .card-gold .outer-glow { inset:-12px; }
+
+  /* SILVER + BRONZE: same size, slightly wider on mobile */
+  .card-silver { order:2; width:260px; }
+  .card-bronze { order:3; width:260px; }
+  .card-silver .card-inner { min-height:230px; }
+  .card-bronze .card-inner { min-height:230px; }
+  .card-silver .reward-amount { font-size:30px; }
+  .card-bronze .reward-amount { font-size:30px; }
+  .card-silver .amount { font-size:20px; }
+  .card-bronze .amount { font-size:20px; }
+
+  /* Full-width table */
+  .lb-section, .search-wrap { max-width:100%; padding:0 4px; }
+  .search-input { font-size:16px; } /* prevents iOS auto-zoom on focus */
+  .lb-header { padding:0 10px 6px; }
+  .lb-row { padding:8px 10px; gap:7px; }
+  .lb-rank { font-size:15px; min-width:22px; }
+  .lb-avatar { width:28px; height:28px; font-size:11px; }
+  .lb-username { font-size:13px; }
+  .lb-wagered { font-size:13px; }
+  .lb-prize { font-size:10px; }
+  .lb-right { min-width:65px; }
+  .lb-header-wager { min-width:70px; }
+  .lb-header-prize { min-width:50px; }
+
+  /* Timer */
+  .time-num { font-size:26px; }
+  .timer-digits { gap:6px; }
+  .time-sep { font-size:20px; padding-bottom:7px; }
+
+  /* Footer */
+  .okie-footer { padding:14px 16px 20px; }
+  .okie-footer-text { font-size:13px; }
+  .okie-copy { font-size:10px; }
+  .okie-top-bar { padding:10px 12px 9px; }
+  .okie-logo-text { font-size:14px; letter-spacing:1px; }
+}
+
+/* ── MOBILE PERFORMANCE + TOUCH ─────────────────────────────
+   Applied at ≤600px
+─────────────────────────────────────────────────────────── */
+@media (max-width:600px) {
+  body { padding-bottom:90px; } /* clear iOS home indicator */
+  .podium-row { touch-action:pan-y; }
+  .card { touch-action:pan-y; }
+  .lb-section { -webkit-overflow-scrolling:touch; }
+  /* Reduce backlight size on mobile for GPU perf */
+  .card-silver .card-backlight { width:200px; height:260px; filter:blur(18px); }
+  .card-gold   .card-backlight { width:240px; height:310px; filter:blur(18px); }
+  .card-bronze .card-backlight { width:200px; height:260px; filter:blur(18px); }
+}
+
+@media (max-width:400px) {
+  .scene { padding:12px 8px 0; }
+  .title { font-size:30px; letter-spacing:2px; }
+  .card-silver { width:88%; }
+  .card-bronze { width:88%; }
+  .time-num { font-size:22px; }
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<canvas id="ripple-canvas"></canvas>
+<canvas id="arc-canvas"></canvas>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="okie-top-bar">
+  <div class="okie-made-by">
+    <div class="okie-made-line">made by</div>
+    <div class="okie-logo-wrap">
+      <span class="okie-logo-text">OKIE<span class="odot">.</span>DIGITAL<span class="odot">.</span>⭐<span class="otm">™</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="scene">
+  <div class="title-wrap"><span class="title">LEADERBOARD</span><span class="title-tm">™</span></div>
+  <div class="subtitle">STAKE.COM · MONTHLY CHALLENGE</div>
+
+  <div class="prize-pool-badge">
+    <div class="prize-pool-lbl">PRIZE POOL · TOP 20</div>
+    <div class="prize-pool-amount">$1,000.00</div>
+  </div>
+
+  <div class="status-row">
+    <div class="live-dot"></div>
+    <div class="live-txt">LIVE</div>
+    <div class="status-sep">·</div>
+    <div class="last-update" id="lastUpdate">Loading…</div>
+    <div class="status-sep">·</div>
+    <div class="entry-count" id="entryCount"></div>
+  </div>
+
+  <!-- TOP 3 PODIUM -->
+  <div class="podium-row" id="podium" style="min-height:300px;">
+    <div class="state-msg" id="podiumLoading"><span class="spinner"></span>Connecting to leaderboard…</div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap" id="searchWrap" style="display:none;">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="searchBox" type="text" placeholder="Search players…" autocomplete="off">
+  </div>
+
+  <!-- RANKS 4+ -->
+  <div class="lb-section" id="lbSection" style="display:none;">
+    <div class="lb-header">
+      <div class="lb-header-rank">#</div>
+      <div class="lb-header-user">Player</div>
+      <div class="lb-header-wager">Wagered</div>
+      <div class="lb-header-prize">Prize</div>
+    </div>
+    <div id="lbRows"></div>
+  </div>
+
+  <!-- TIMER -->
+  <div class="timer-block">
+    <div class="timer-label">Leaderboard Ends In</div>
+    <div class="timer-digits">
+      <div class="time-unit"><div class="time-num" id="t-d">--</div><div class="time-lbl">Days</div></div>
+      <div class="time-sep">:</div>
+      <div class="time-unit"><div class="time-num" id="t-h">--</div><div class="time-lbl">Hrs</div></div>
+      <div class="time-sep">:</div>
+      <div class="time-unit"><div class="time-num" id="t-m">--</div><div class="time-lbl">Min</div></div>
+      <div class="time-sep">:</div>
+      <div class="time-unit"><div class="time-num" id="t-s">--</div><div class="time-lbl">Sec</div></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+//  API_URL: same-domain endpoint — no proxy needed!
+//  Matches the existing /leaderboard/api.php exactly
+// ═══════════════════════════════════════════════════════════
+const API_URL     = '/leaderboard/api.php';
+const REFRESH_MS  = 30000; // 30 seconds (matches original)
+const TOTAL_PRIZE = 1000;
+const PRIZES = [250,200,150,75,50,50,40,35,30,25,15,15,15,10,10,10,5,5,5,5]; // 20 places · $1,000 total
+
+// ═══════════════════════════════════════════════════════════
+//  BG PARTICLE FIELD
+// ═══════════════════════════════════════════════════════════
+const bgC = document.getElementById('bg-canvas');
+const bgX = bgC.getContext('2d');
+let BW, BH;
+function rBg() { BW = bgC.width = window.innerWidth; BH = bgC.height = window.innerHeight; }
+rBg(); window.addEventListener('resize', rBg);
+const BGP = [];
+const PARTICLE_COUNT = window.innerWidth <= 600 ? 60 : 130;
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const t = Math.random();
+  BGP.push({
+    x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.4 + 0.3,
+    vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18,
+    a: Math.random() * .25 + .04,
+    h: t < .65 ? 265 + Math.random() * 35 : t < .8 ? 250 + Math.random() * 20 : 45,
+    p: Math.random() * Math.PI * 2, ps: Math.random() * .012 + .005
+  });
+}
+(function bgLoop() {
+  bgX.clearRect(0, 0, BW, BH);
+  BGP.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.p += p.ps;
+    if (p.x < 0) p.x = BW; if (p.x > BW) p.x = 0;
+    if (p.y < 0) p.y = BH; if (p.y > BH) p.y = 0;
+    const a = p.a * (.5 + .5 * Math.sin(p.p));
+    bgX.beginPath(); bgX.arc(p.x, p.y, p.r * (.7 + .45 * Math.sin(p.p)), 0, Math.PI * 2);
+    bgX.fillStyle = `hsla(${p.h},80%,72%,${a})`; bgX.fill();
+  });
+  requestAnimationFrame(bgLoop);
+})();
+
+// ═══════════════════════════════════════════════════════════
+//  LIGHTNING ENGINE
+// ═══════════════════════════════════════════════════════════
+const arcC = document.getElementById('arc-canvas');
+const arcX = arcC.getContext('2d');
+function rArc() { arcC.width = window.innerWidth; arcC.height = window.innerHeight; }
+rArc(); window.addEventListener('resize', rArc);
+
+function midDisplace(x1,y1,x2,y2,r,d) {
+  if (d === 0) return [[x1,y1],[x2,y2]];
+  const mx=(x1+x2)/2, my=(y1+y2)/2, len=Math.sqrt((x2-x1)**2+(y2-y1)**2)||1;
+  const off=(Math.random()-.5)*len*r*.65, nx=-(y2-y1)/len, ny=(x2-x1)/len;
+  return [...midDisplace(x1,y1,mx+nx*off,my+ny*off,r*.62,d-1),
+          ...midDisplace(mx+nx*off,my+ny*off,x2,y2,r*.62,d-1).slice(1)];
+}
+const ARCS=[], IMP=[];
+function spawnArc(sx,sy,ex,ey,cols,branch) {
+  const d=3+Math.floor(Math.random()*2), pts=midDisplace(sx,sy,ex,ey,.52,d);
+  const arc={pts,life:1,decay:.048+Math.random()*.065,w:.6+Math.random()*1.4,cols,branch:null};
+  if (branch) {
+    const bi=Math.floor(pts.length*.3+Math.random()*pts.length*.35), bp=pts[Math.min(bi,pts.length-1)];
+    arc.branch={pts:midDisplace(bp[0],bp[1],bp[0]+(Math.random()-.5)*90+(ex-sx)*.3,bp[1]+(Math.random()-.5)*90+(ey-sy)*.3,.48,d-1),w:arc.w*.42};
+  }
+  ARCS.push(arc);
+}
+function spawnImpact(x,y,cols) {
+  for (let i=0;i<14;i++) {
+    const ang=Math.random()*Math.PI*2, spd=1.5+Math.random()*4;
+    IMP.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd-1,life:1,decay:.045+Math.random()*.06,r:.8+Math.random()*2,cols});
+  }
+}
+function drawBolt(pts,w,a,cols) {
+  if (pts.length < 2) return;
+  [[a*.15,w*7,cols.outer,16],[a*.4,w*3,cols.mid,0],[a*.95,w,cols.core,0]].forEach(([al,lw,col,blur]) => {
+    arcX.save(); arcX.globalAlpha=al; arcX.strokeStyle=col; arcX.lineWidth=lw;
+    if (blur) { arcX.shadowColor=col; arcX.shadowBlur=blur; }
+    arcX.beginPath(); arcX.moveTo(pts[0][0],pts[0][1]);
+    pts.slice(1).forEach(p => arcX.lineTo(p[0],p[1]));
+    arcX.stroke(); arcX.restore();
+  });
+}
+(function arcLoop() {
+  arcX.clearRect(0,0,arcC.width,arcC.height);
+  ARCS.forEach(arc => {
+    arc.life -= arc.decay;
+    const a = arc.life * (arc.life < .2 ? arc.life / .2 : 1);
+    if (a > .01) {
+      drawBolt(arc.pts, arc.w, a, arc.cols);
+      if (arc.branch) drawBolt(arc.branch.pts, arc.branch.w, a*.6, arc.cols);
+      const tip = arc.pts[arc.pts.length-1];
+      if (a > .3) {
+        arcX.save(); arcX.globalAlpha=a*.9;
+        const g = arcX.createRadialGradient(tip[0],tip[1],0,tip[0],tip[1],10);
+        g.addColorStop(0,'rgba(255,255,255,.95)');
+        g.addColorStop(.4, arc.cols.mid.replace(')',',0.8)').replace('rgb','rgba'));
+        g.addColorStop(1,'transparent');
+        arcX.fillStyle=g; arcX.beginPath(); arcX.arc(tip[0],tip[1],10,0,Math.PI*2); arcX.fill(); arcX.restore();
+        for (let i=0;i<6;i++) {
+          const ang=Math.PI*2*i/6+arc.life*3, r1=4+a*5, r2=8+a*12;
+          arcX.save(); arcX.globalAlpha=a*.5; arcX.strokeStyle=arc.cols.core; arcX.lineWidth=.8;
+          arcX.beginPath(); arcX.moveTo(tip[0]+Math.cos(ang)*r1,tip[1]+Math.sin(ang)*r1);
+          arcX.lineTo(tip[0]+Math.cos(ang)*r2,tip[1]+Math.sin(ang)*r2); arcX.stroke(); arcX.restore();
+        }
+      }
+    }
+  });
+  ARCS.splice(0, ARCS.length, ...ARCS.filter(a => a.life > 0));
+  IMP.forEach(s => {
+    s.x+=s.vx; s.y+=s.vy; s.vy+=.12; s.life-=s.decay;
+    const a = s.life * (s.life < .3 ? s.life / .3 : 1);
+    if (a > .01) {
+      arcX.save(); arcX.globalAlpha=a;
+      const g = arcX.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*2);
+      g.addColorStop(0,'rgba(255,255,255,1)');
+      g.addColorStop(.4, s.cols.core.replace(')',',0.9)').replace('rgb','rgba'));
+      g.addColorStop(1,'transparent');
+      arcX.fillStyle=g; arcX.beginPath(); arcX.arc(s.x,s.y,s.r*2,0,Math.PI*2); arcX.fill(); arcX.restore();
+    }
+  });
+  IMP.splice(0, IMP.length, ...IMP.filter(s => s.life > 0));
+  requestAnimationFrame(arcLoop);
+})();
+
+// ═══════════════════════════════════════════════════════════
+//  SPARK SYSTEM (card surface particles)
+// ═══════════════════════════════════════════════════════════
+class SparkSystem {
+  constructor(canvas, hues) {
+    this.canvas=canvas; this.ctx=canvas.getContext('2d');
+    this.hues=hues; this.particles=[]; this.on=false; this.iv=null;
+    this.resize(); this.loop();
+  }
+  resize() { const r=this.canvas.parentElement.getBoundingClientRect(); this.canvas.width=r.width; this.canvas.height=r.height; }
+  enable()  { if(this.on) return; this.on=true;  this.iv=setInterval(()=>{ for(let i=0;i<2;i++) this.spawn(); if(Math.random()<.07) this.burst(); },30); }
+  disable() { if(!this.on) return; this.on=false; clearInterval(this.iv); this.iv=null; }
+  spawn() {
+    const W=this.canvas.width, H=this.canvas.height, e=Math.random()<.5;
+    this.particles.push({
+      x:e?Math.random()*W:Math.random()<.5?0:W, y:e?Math.random()<.5?0:H:Math.random()*H,
+      vx:(Math.random()-.5)*1.1, vy:(Math.random()-.5)*1.1-.25,
+      r:Math.random()*1.5+.3, life:1, decay:Math.random()*.013+.007,
+      h:this.hues[Math.floor(Math.random()*this.hues.length)], sat:65+Math.random()*28,
+      type:Math.random()<.12?'star':'dot', spin:Math.random()*Math.PI*2, sv:(Math.random()-.5)*.1
+    });
+  }
+  burst() {
+    const W=this.canvas.width, H=this.canvas.height, cx=Math.random()*W, cy=Math.random()*H;
+    for (let i=0;i<7;i++) {
+      const ang=Math.PI*2*i/7+Math.random()*.4, spd=1+Math.random()*2;
+      this.particles.push({x:cx,y:cy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,r:Math.random()*2+.8,life:1,decay:.018+Math.random()*.015,h:this.hues[Math.floor(Math.random()*this.hues.length)],sat:90,type:'star',spin:Math.random()*Math.PI*2,sv:(Math.random()-.5)*.18});
+    }
+  }
+  drawStar(ctx,x,y,r,rot) {
+    ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.beginPath();
+    for (let i=0;i<5;i++) { const a=Math.PI*2*i/5-Math.PI/2, a2=a+Math.PI/5; i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r); ctx.lineTo(Math.cos(a2)*r*.4,Math.sin(a2)*r*.4); }
+    ctx.closePath(); ctx.restore();
+  }
+  loop() {
+    const ctx=this.ctx;
+    (function run(self) {
+      ctx.clearRect(0,0,self.canvas.width,self.canvas.height);
+      self.particles = self.particles.filter(p=>p.life>0);
+      self.particles.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy; p.vy+=.012; p.life-=p.decay; p.spin+=p.sv;
+        const a=p.life*(p.life<.3?p.life/.3:1);
+        ctx.save(); ctx.globalAlpha=a*.85;
+        const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.5);
+        g.addColorStop(0,`hsl(${p.h},${p.sat}%,94%)`); g.addColorStop(.5,`hsl(${p.h},${p.sat}%,70%)`); g.addColorStop(1,`hsla(${p.h},${p.sat}%,50%,0)`);
+        ctx.fillStyle=g;
+        if (p.type==='star') { self.drawStar(ctx,p.x,p.y,p.r*2,p.spin); ctx.fill(); }
+        else { ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); }
+        ctx.restore();
+      });
+      requestAnimationFrame(()=>run(self));
+    })(this);
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════
+//  GOLD GRID RIPPLE — water ripple effect from card hover
+//  Glowing gold grid lines that pulse outward like a stone
+//  hitting water, emanating from the active card center
+// ═══════════════════════════════════════════════════════════
+const ripC = document.getElementById('ripple-canvas');
+const ripX = ripC.getContext('2d');
+function rRip() { ripC.width = window.innerWidth; ripC.height = window.innerHeight; }
+rRip(); window.addEventListener('resize', rRip);
+
+const RIPPLES = [];
+
+function spawnRipple(cx, cy, cardKey) {
+  const colors = {
+    gold:   { inner: 'rgba(255,210,60,',  outer: 'rgba(255,160,0,' },
+    silver: { inner: 'rgba(200,220,255,', outer: 'rgba(160,185,240,' },
+    bronze: { inner: 'rgba(220,150,60,',  outer: 'rgba(190,110,20,' },
+  };
+  const col = colors[cardKey] || colors.gold;
+  RIPPLES.push({
+    cx, cy,
+    r: 0,
+    maxR: Math.max(window.innerWidth, window.innerHeight) * 0.55,
+    life: 1,
+    decay: 0.012,
+    col,
+    gridSpacing: 38,
+    lineWidth: 0.6,
+  });
+}
+
+// Grid intersection dots + expanding ring
+function drawRipple(r) {
+  if (r.r > r.maxR) return;
+  const a = r.life * (r.life < 0.3 ? r.life / 0.3 : 1);
+  const waveFront = r.r;
+  const waveWidth = 120;
+
+  // draw glowing ring at wave front
+  const ringAlpha = a * 0.55;
+  ripX.save();
+  ripX.globalAlpha = ringAlpha;
+  const rg = ripX.createRadialGradient(r.cx, r.cy, Math.max(0, waveFront - waveWidth), r.cx, r.cy, waveFront + 20);
+  rg.addColorStop(0, r.col.inner + '0)');
+  rg.addColorStop(0.6, r.col.inner + (a * 0.18) + ')');
+  rg.addColorStop(0.85, r.col.inner + (a * 0.45) + ')');
+  rg.addColorStop(1, r.col.inner + '0)');
+  ripX.strokeStyle = r.col.inner + (a * 0.7) + ')';
+  ripX.lineWidth = 1.5;
+  ripX.shadowColor = r.col.outer + '1)';
+  ripX.shadowBlur = 14;
+  ripX.beginPath();
+  ripX.arc(r.cx, r.cy, waveFront, 0, Math.PI * 2);
+  ripX.stroke();
+  ripX.restore();
+
+  // draw grid lines that light up as wave passes through
+  const gs = r.gridSpacing;
+  const startX = r.cx - r.maxR;
+  const startY = r.cy - r.maxR;
+  const endX   = r.cx + r.maxR;
+  const endY   = r.cy + r.maxR;
+
+  // only draw grid within the wave band
+  const bandOuter = waveFront + 30;
+  const bandInner = Math.max(0, waveFront - waveWidth);
+
+  ripX.save();
+  ripX.lineWidth = r.lineWidth;
+  ripX.shadowBlur = 6;
+  ripX.shadowColor = r.col.inner + '0.8)';
+
+  // vertical grid lines
+  for (let x = Math.floor(startX / gs) * gs; x <= endX; x += gs) {
+    const distFromCenter = Math.abs(x - r.cx);
+    // only show segments where the wave has passed
+    const segStart = Math.max(r.cy - Math.sqrt(Math.max(0, bandOuter**2 - distFromCenter**2)), startY);
+    const segEnd   = Math.min(r.cy + Math.sqrt(Math.max(0, bandOuter**2 - distFromCenter**2)), endY);
+    const fadeStart = r.cy - Math.sqrt(Math.max(0, bandInner**2 - distFromCenter**2));
+    const fadeEnd   = r.cy + Math.sqrt(Math.max(0, bandInner**2 - distFromCenter**2));
+    if (segEnd <= segStart) continue;
+
+    // brightness at wave front
+    const waveDist = Math.abs(distFromCenter - waveFront);
+    const intensity = Math.max(0, 1 - waveDist / (waveWidth * 0.6));
+    const lineA = a * intensity * 0.35;
+    if (lineA < 0.005) continue;
+
+    ripX.globalAlpha = lineA;
+    ripX.strokeStyle = r.col.inner + '1)';
+    ripX.beginPath();
+    ripX.moveTo(x, segStart);
+    ripX.lineTo(x, segEnd);
+    ripX.stroke();
+  }
+
+  // horizontal grid lines
+  for (let y = Math.floor(startY / gs) * gs; y <= endY; y += gs) {
+    const distFromCenter = Math.abs(y - r.cy);
+    const segStart = Math.max(r.cx - Math.sqrt(Math.max(0, bandOuter**2 - distFromCenter**2)), startX);
+    const segEnd   = Math.min(r.cx + Math.sqrt(Math.max(0, bandOuter**2 - distFromCenter**2)), endX);
+    if (segEnd <= segStart) continue;
+
+    const waveDist = Math.abs(distFromCenter - waveFront);
+    const intensity = Math.max(0, 1 - waveDist / (waveWidth * 0.6));
+    const lineA = a * intensity * 0.35;
+    if (lineA < 0.005) continue;
+
+    ripX.globalAlpha = lineA;
+    ripX.strokeStyle = r.col.inner + '1)';
+    ripX.beginPath();
+    ripX.moveTo(segStart, y);
+    ripX.lineTo(segEnd, y);
+    ripX.stroke();
+  }
+
+  // grid intersection dots that light up at wave front
+  for (let x = Math.floor(startX / gs) * gs; x <= endX; x += gs) {
+    for (let y = Math.floor(startY / gs) * gs; y <= endY; y += gs) {
+      const d = Math.sqrt((x - r.cx)**2 + (y - r.cy)**2);
+      const waveDist = Math.abs(d - waveFront);
+      if (waveDist > waveWidth * 0.5) continue;
+      const dotA = a * Math.max(0, 1 - waveDist / (waveWidth * 0.35)) * 0.7;
+      if (dotA < 0.01) continue;
+      ripX.save();
+      ripX.globalAlpha = dotA;
+      ripX.fillStyle = r.col.inner + '1)';
+      ripX.shadowColor = r.col.inner + '1)';
+      ripX.shadowBlur = 8;
+      ripX.beginPath();
+      ripX.arc(x, y, 1.5, 0, Math.PI * 2);
+      ripX.fill();
+      ripX.restore();
+    }
+  }
+  ripX.restore();
+}
+
+(function rippleLoop() {
+  ripX.clearRect(0, 0, ripC.width, ripC.height);
+  RIPPLES.forEach(r => {
+    r.r += 4.5;
+    r.life -= r.decay;
+    if (r.life > 0 && r.r < r.maxR) drawRipple(r);
+  });
+  RIPPLES.splice(0, RIPPLES.length, ...RIPPLES.filter(r => r.life > 0 && r.r < r.maxR));
+  requestAnimationFrame(rippleLoop);
+})();
+
+// ═══════════════════════════════════════════════════════════
+//  MAGNET PUSH + ARC-TO-CURSOR
+// ═══════════════════════════════════════════════════════════
+const CARD_COLS = {
+  silver: {core:'#ffffff', mid:'rgb(180,200,255)', outer:'rgb(100,120,200)'},
+  gold:   {core:'#fffde8', mid:'rgb(255,220,60)',  outer:'rgb(180,130,0)'},
+  bronze: {core:'#ffe8c0', mid:'rgb(220,150,70)',  outer:'rgb(140,70,10)'},
+};
+const CARD_STRENGTH = { silver:.38, gold:.46, bronze:.38 };
+let CARD_DEFS = [], OFF = {}, mx=0, my=0;
+
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+
+// ── 20-QUADRANT ARC SYSTEM ─────────────────────────────────────
+// Card is divided into a 4×5 grid of 20 quadrants.
+// Each quadrant contributes exactly one possible lightning origin.
+// Up to 7 random quadrants are selected per card per frame.
+// Max simultaneous bolts: 7 per card × 3 cards = 21.
+
+function getQuadrantOrigins(rect, count) {
+  const cols = 4, rows = 5;
+  const qw = rect.width / cols, qh = rect.height / rows;
+  // Build all 20 quadrant centers
+  const all = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      all.push({
+        x: rect.left + qw * c + qw * (.25 + Math.random() * .5),
+        y: rect.top  + qh * r + qh * (.25 + Math.random() * .5),
+      });
+    }
+  }
+  // Shuffle and take `count` (max 7)
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  return all.slice(0, Math.min(count, 4));
+}
+
+// Target = cursor with tight aim (controlled chaos)
+function spreadTarget(spread) {
+  const ang = Math.random() * Math.PI * 2;
+  const r   = Math.random() * spread;
+  return { x: mx + Math.cos(ang) * r, y: my + Math.sin(ang) * r };
+}
+
+(function mainLoop() {
+  const now = Date.now();
+  CARD_DEFS.forEach((c, i) => {
+    const el = document.getElementById(c.id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+    const dx = mx-cx, dy = my-cy, dist = Math.sqrt(dx*dx+dy*dy);
+
+    // Each card has its own wider detection threshold
+    const threshold = Math.max(rect.width, rect.height) * 1.3;
+
+    if (!OFF[i]) OFF[i] = {x:0,y:0,rx:0,ry:0,near:false,lastArc:0,lastRipple:0};
+    const o = OFF[i], wasNear = o.near;
+    o.near = dist < threshold;
+
+    if (c.spark) {
+      if (o.near && !wasNear) {
+        c.spark.enable();
+        if (window.innerWidth > 600) spawnRipple(cx, cy, c.key);
+      }
+      if (!o.near && wasNear) c.spark.disable();
+    }
+    // Periodic ripple per card independently
+    if (o.near && now - o.lastRipple > 1800) {
+      if (window.innerWidth > 600) spawnRipple(cx, cy, c.key);
+      o.lastRipple = now;
+    }
+
+    if (o.near) {
+      // prox: 0 = just entered range, 1 = cursor exactly on center
+      const prox = 1 - Math.min(dist / threshold, 1);
+
+      // 20-quadrant system — each card fires independently
+      // Rate: fast when close, slow when far
+      const arcRate = 28 + 130 * (1 - prox * prox);
+      if (now - o.lastArc > arcRate) {
+        o.lastArc = now;
+
+        // 1–7 quadrants fire based on proximity
+        const n = prox > .85 ? 4
+                : prox > .6  ? 3
+                : prox > .3  ? 2
+                : 1;
+
+        // Spread: wide when far, tight when close
+        const spread = 45 * (1 - prox * .6);
+
+        // Pick n random quadrant origins from the 4×5 grid
+        const origins = getQuadrantOrigins(rect, n);
+        origins.forEach(orig => {
+          const tgt = spreadTarget(spread);
+          spawnArc(orig.x, orig.y, tgt.x, tgt.y, c.cols, Math.random() < .5);
+          if (Math.random() < .6) spawnImpact(tgt.x, tgt.y, c.cols);
+        });
+      }
+      // PUSH away from cursor — independent per card, wider spread
+      const force = Math.pow(1 - dist/threshold, 2.0) * c.strength * 1.4;
+      const ms = c.key === 'gold' ? 32 : 24;
+      o.x += (Math.max(-ms, Math.min(ms, -dx * force)) - o.x) * .13;
+      o.y += (Math.max(-ms, Math.min(ms, -dy * force)) - o.y) * .13;
+      o.rx += ((dy/threshold) * 12 - o.rx) * .11;
+      o.ry += (-(dx/threshold) * 12 - o.ry) * .11;
+    } else {
+      o.x += (0-o.x)*.09; o.y += (0-o.y)*.09;
+      o.rx += (0-o.rx)*.09; o.ry += (0-o.ry)*.09;
+    }
+    el.style.transform = `translate(${o.x.toFixed(2)}px,${o.y.toFixed(2)}px) rotateX(${o.rx.toFixed(2)}deg) rotateY(${o.ry.toFixed(2)}deg)`;
+  });
+  requestAnimationFrame(mainLoop);
+})();
+
+// ═══════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+//  SECURITY: sanitize all user-supplied strings before
+//  injecting into innerHTML. Strips HTML tags + encodes.
+// ═══════════════════════════════════════════════════════
+function sanitize(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .slice(0, 64);
+}
+
+function fmt(n) {
+  if (n == null || isNaN(n)) return '—';
+  return '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function initials(name) {
+  return sanitize(name || '?').slice(0, 2).toUpperCase() || '?';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  BUILD TOP-3 PODIUM
+//  Visual order: [1]=silver(#2)  [0]=gold(#1)  [2]=bronze(#3)
+// ═══════════════════════════════════════════════════════════
+function buildPodium(players) {
+  const podium = document.getElementById('podium');
+  podium.innerHTML = '';
+  CARD_DEFS = [];
+
+  const slots = [
+    { eIdx:1, key:'silver', cls:'card-silver', extra:'' },
+    { eIdx:0, key:'gold',   cls:'card-gold',   extra:'<div class="outer-glow"></div><div class="streak-ring"></div><div class="gold-crown">👑</div>' },
+    { eIdx:2, key:'bronze', cls:'card-bronze',  extra:'' },
+  ];
+
+  slots.forEach((slot, vi) => {
+    const p = players[slot.eIdx];
+    if (!p) return;
+    const prize = PRIZES[slot.eIdx] ?? 0;
+    const cardId = `card-${slot.key}`;
+    const sparkId = `spark-${slot.key}`;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = `card ${slot.cls}`;
+    wrapper.id = cardId;
+    wrapper.innerHTML = `
+      <div class="card-backlight"></div>
+      <div class="card-glow"></div>
+      ${slot.key === 'silver' ? '<div class="card-shine"></div>' : ''}
+      ${slot.extra}
+      <canvas class="spark-canvas" id="${sparkId}"></canvas>
+      <div class="card-inner">
+        <div class="rank-badge">${p.rank}</div>
+        <div class="avatar">${initials(p.name)}</div>
+        <div class="username" title="${sanitize(p.name)}">${sanitize(p.name)}</div>
+        <div class="stat-block">
+          <div class="label">Wagered</div>
+          <div class="amount">${fmt(p.score)}</div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="reward-label">Reward</div>
+        <div class="reward-amount">${fmt(prize)}</div>
+      </div>`;
+    podium.appendChild(wrapper);
+
+    const sparkCanvas = document.getElementById(sparkId);
+    const hues = {silver:[0,210,220,200,270,280], gold:[45,38,55,60,270,280], bronze:[28,35,270,280,260]}[slot.key];
+    const spark = sparkCanvas ? new SparkSystem(sparkCanvas, hues) : null;
+    CARD_DEFS.push({id:cardId, key:slot.key, cols:CARD_COLS[slot.key], strength:CARD_STRENGTH[slot.key], spark});
+    OFF[CARD_DEFS.length-1] = {x:0,y:0,rx:0,ry:0,near:false,lastArc:0,lastRipple:0};
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  BUILD RANKS 4+ TABLE
+// ═══════════════════════════════════════════════════════════
+let allPlayers = [];
+
+function buildTable(players, filter='') {
+  const container = document.getElementById('lbRows');
+  const section   = document.getElementById('lbSection');
+  const searchWrap = document.getElementById('searchWrap');
+  const rest = players.slice(3);
+
+  if (!rest.length) { section.style.display='none'; searchWrap.style.display='none'; return; }
+  section.style.display = 'block';
+  searchWrap.style.display = 'block';
+
+  const topWagered = players[0]?.score || 1;
+  const q = filter.toLowerCase().trim();
+  const filtered = q ? rest.filter(p => p.name.toLowerCase().includes(q)) : rest;
+
+  container.innerHTML = '';
+
+  if (!filtered.length) {
+    container.innerHTML = `<div class="lb-empty">No players matching &quot;${sanitize(filter)}&quot;</div>`;
+    return;
+  }
+
+  filtered.forEach(p => {
+    const prize = PRIZES[p.rank - 1] ?? 0;
+    const pct = Math.min(100, (p.score / topWagered) * 100);
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.innerHTML = `
+      <div class="lb-rank">${p.rank}</div>
+      <div class="lb-avatar">${initials(p.name)}</div>
+      <div class="lb-user">
+        <div class="lb-username" title="${sanitize(p.name)}">${sanitize(p.name)}</div>
+        <div class="lb-sublbl">WAGERED</div>
+      </div>
+      <div class="lb-right">
+        <div class="lb-wagered">${fmt(p.score)}</div>
+        ${prize > 0
+          ? `<div class="lb-prize">${fmt(prize)}</div>`
+          : `<div class="lb-no-prize">—</div>`
+        }
+      </div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct.toFixed(1)}%"></div></div>`;
+    container.appendChild(row);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SEARCH — wired to live data
+// ═══════════════════════════════════════════════════════════
+document.getElementById('searchBox').addEventListener('input', e => {
+  buildTable(allPlayers, e.target.value);
+});
+
+// ═══════════════════════════════════════════════════════════
+//  COUNTDOWN — end of current month (matches leaderboard.js)
+// ═══════════════════════════════════════════════════════════
+function getEndOfMonth() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59).getTime();
+}
+const END_TIME = getEndOfMonth();
+setInterval(() => {
+  const diff = END_TIME - Date.now();
+  if (diff <= 0) {
+    ['t-d','t-h','t-m','t-s'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+  document.getElementById('t-d').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
+  document.getElementById('t-h').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById('t-m').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+  document.getElementById('t-s').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+}, 1000);
+
+// ═══════════════════════════════════════════════════════════
+//  FETCH & RENDER — calls the existing api.php directly
+//  Response shape: { users: [{username, scaled_total_amount_bet, level, rank}] }
+// ═══════════════════════════════════════════════════════════
+async function fetchAndRender() {
+  try {
+    const res = await fetch(API_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`API returned HTTP ${res.status}`);
+    const json = await res.json();
+    if (!json.users || !Array.isArray(json.users)) throw new Error('Unexpected API response shape');
+
+    // Normalize to same shape as leaderboard.js
+    allPlayers = json.users
+      .map(u => ({
+        name:  u.username,
+        score: Number(u.scaled_total_amount_bet || 0),
+        level: u.level,
+        tier:  u.rank,
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map((u, i) => ({ ...u, rank: i + 1 }));
+
+    if (!allPlayers.length) {
+      document.getElementById('podium').innerHTML = '<div class="state-msg">No entries yet — be the first!</div>';
+      document.getElementById('lbSection').style.display = 'none';
+      return;
+    }
+
+    buildPodium(allPlayers);
+    buildTable(allPlayers, document.getElementById('searchBox').value);
+
+    // status bar
+    document.getElementById('entryCount').textContent = `${allPlayers.length} player${allPlayers.length !== 1 ? 's' : ''}`;
+    document.getElementById('lastUpdate').textContent =
+      'Updated ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+  } catch (err) {
+    console.error('[HANVEE LB]', err);
+    document.getElementById('podium').innerHTML = `
+      <div class="state-msg error">
+        ⚠ Failed to load leaderboard
+        <span class="state-sub">${err.message}</span>
+        <span class="state-sub">Check that /leaderboard/api.php is accessible</span>
+      </div>`;
+    const isCors = err.message && (err.message.includes('Failed to fetch') || err.message.includes('NetworkError'));
+    document.getElementById('lastUpdate').textContent = isCors ? 'Network error — retrying…' : 'Failed — retrying…';
+    if (isCors) console.warn('[HANVEE LB] Possible CORS or network issue. Verify /leaderboard/api.php is accessible from this origin.');
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════
+//  RESIZE OBSERVER — keeps canvases sharp on container
+//  size changes (zoom, sidebar open/close, etc.)
+// ═══════════════════════════════════════════════════════
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(() => { rBg(); rArc(); rRip(); }).observe(document.body);
+}
+
+// ── BOOT ──────────────────────────────────────
+
+
+// ════════════════════════════════════════════════════════════════════════
+//  OKIE.DIGITAL · HANVEE LEADERBOARD · ENHANCEMENT SUITE
+//  20 labeled features — each wrapped in a toggleable flag.
+//  To enable a feature: change its flag from false → true, save, reload.
+//  Features are self-contained; they don't break anything when disabled.
+// ════════════════════════════════════════════════════════════════════════
+
+const FEATURES = {
+  rankChangeAnimations:   false, // #01 — slide + color flash when rank changes on refresh
+  podiumEntrance:         false, // #02 — gold drops, silver/bronze slide in on first load
+  podiumWagerBars:        false, // #03 — relative wager progress bar on each podium card
+  prizeZoneDots:          false, // #04 — colored dot left of rank showing prize territory
+  prizeTooltip:           false, // #05 — hover row → prize breakdown tooltip
+  shareButton:            false, // #06 — copy referral link / leaderboard URL button
+  sortableColumns:        false, // #07 — click Wagered / Prize headers to sort asc/desc
+  refreshCountdown:       false, // #08 — "refreshing in Ns" live countdown in status bar
+  sparklines:             false, // #09 — 7-day wager trend sparkline per table row
+  gapToNext:              false, // #10 — "$X,XXX to #N" gap indicator on each row
+  monthComparison:        false, // #11 — toggle current vs last month standings
+  winnerModal:            false, // #12 — confetti + winner announcement when timer hits 0
+  mobileStickyPodium:     false, // #13 — sticky compact top-3 strip on mobile
+  playerLookup:           false, // #14 — "find my rank" input with row highlight + scroll
+  wagerVelocity:          false, // #15 — $/hr pace on podium cards with flame if on-track
+  prizePoolBar:           false, // #16 — segmented prize pool bar in header
+  referralCTA:            false, // #17 — styled "Use code HANVEE" CTA below table
+  archiveDropdown:        false, // #18 — past month archive dropdown in header
+  obsOverlayMode:         false, // #19 — ?obs=1 param for transparent OBS overlay
+  projectedRanks:         false, // #20 — projected end-of-month rank badge per row
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// #01 · RANK-CHANGE ANIMATIONS
+// When data refreshes, rows that moved up flash green with a "+N" badge.
+// Rows that dropped flash red with a "-N" badge. Tracks previous ranks.
+// ─────────────────────────────────────────────────────────────────────
+let _prevRanks = {};
+function applyRankChangeAnimations(players) {
+  if (!FEATURES.rankChangeAnimations) return;
+  players.forEach(p => {
+    const prev = _prevRanks[p.name];
+    if (prev == null) { _prevRanks[p.name] = p.rank; return; }
+    const delta = prev - p.rank; // positive = moved up
+    if (delta === 0) { _prevRanks[p.name] = p.rank; return; }
+    const row = document.querySelector(`.lb-row[data-name="${CSS.escape(p.name)}"]`);
+    if (!row) { _prevRanks[p.name] = p.rank; return; }
+    const badge = document.createElement('span');
+    badge.className = 'rank-delta-badge';
+    badge.textContent = (delta > 0 ? '▲+' : '▼') + Math.abs(delta);
+    badge.style.cssText = `position:absolute;right:8px;top:50%;transform:translateY(-50%);
+      font-family:var(--font-m);font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;
+      background:${delta > 0 ? 'rgba(0,220,100,.15)' : 'rgba(255,60,60,.15)'};
+      color:${delta > 0 ? 'rgba(0,255,120,.9)' : 'rgba(255,80,80,.9)'};
+      border:1px solid ${delta > 0 ? 'rgba(0,200,80,.3)' : 'rgba(255,60,60,.3)'};
+      pointer-events:none;z-index:10;animation:rankDeltaFade 3s ease forwards;`;
+    row.style.animation = `rankRowFlash${delta > 0 ? 'Up' : 'Down'} 0.6s ease`;
+    row.appendChild(badge);
+    setTimeout(() => { badge.remove(); row.style.animation = ''; }, 3200);
+    _prevRanks[p.name] = p.rank;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #02 · PODIUM ENTRANCE ANIMATION
+// Fires once on first load. Gold drops from above; silver from left;
+// bronze from right. Cards start invisible and slide into position.
+// ─────────────────────────────────────────────────────────────────────
+let _podiumEntranceDone = false;
+function triggerPodiumEntrance() {
+  if (!FEATURES.podiumEntrance || _podiumEntranceDone) return;
+  _podiumEntranceDone = true;
+  setTimeout(() => {
+    const silver = document.getElementById('card-silver');
+    const gold   = document.getElementById('card-gold');
+    const bronze = document.getElementById('card-bronze');
+    if (!gold) return;
+    [silver, gold, bronze].forEach(el => { if (el) el.style.opacity = '0'; });
+    if (silver) { silver.style.transform = 'translateX(-120px)'; silver.style.transition = 'transform 0.6s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease'; setTimeout(() => { silver.style.opacity='1'; silver.style.transform=''; }, 300); }
+    if (gold)   { gold.style.transform   = 'translateY(-100px)'; gold.style.transition   = 'transform 0.7s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease'; setTimeout(() => { gold.style.opacity='1';   gold.style.transform=''; },   100); }
+    if (bronze) { bronze.style.transform = 'translateX(120px)';  bronze.style.transition = 'transform 0.6s cubic-bezier(.34,1.56,.64,1), opacity 0.4s ease'; setTimeout(() => { bronze.style.opacity='1'; bronze.style.transform=''; }, 500); }
+  }, 200);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #03 · PODIUM WAGER BARS
+// Injects a thin glowing progress bar below the wagered amount on each
+// podium card showing % of 1st-place total. Gold = always 100%.
+// ─────────────────────────────────────────────────────────────────────
+function injectPodiumWagerBars(players) {
+  if (!FEATURES.podiumWagerBars) return;
+  const top = players[0]?.score || 1;
+  [['card-gold', 0], ['card-silver', 1], ['card-bronze', 2]].forEach(([id, idx]) => {
+    const card = document.getElementById(id);
+    if (!card || !players[idx]) return;
+    if (card.querySelector('.podium-wager-bar-wrap')) return;
+    const pct = Math.round((players[idx].score / top) * 100);
+    const colors = { 'card-gold': 'rgba(255,210,60,.9)', 'card-silver': 'rgba(200,220,255,.8)', 'card-bronze': 'rgba(220,150,60,.8)' };
+    const col = colors[id];
+    const wrap = document.createElement('div');
+    wrap.className = 'podium-wager-bar-wrap';
+    wrap.style.cssText = `width:80%;margin:6px auto 0;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;position:relative;z-index:6;`;
+    const bar = document.createElement('div');
+    bar.style.cssText = `height:100%;width:0;border-radius:2px;background:${col};box-shadow:0 0 8px ${col};transition:width 1.2s cubic-bezier(.4,0,.2,1);`;
+    wrap.appendChild(bar);
+    const amtBlock = card.querySelector('.stat-block');
+    if (amtBlock) amtBlock.after(wrap);
+    setTimeout(() => { bar.style.width = pct + '%'; }, 300);
+    const label = document.createElement('div');
+    label.style.cssText = `text-align:center;font-family:var(--font-m);font-size:8px;letter-spacing:1px;color:${col};opacity:.7;margin-top:3px;position:relative;z-index:6;`;
+    label.textContent = pct + '% OF LEADER';
+    wrap.after(label);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #04 · PRIZE ZONE INDICATOR DOTS
+// Colored dot injected left of rank number in the table. Gold/silver/
+// bronze for top 3, green for paid spots 4–20, gray outside prize pool.
+// ─────────────────────────────────────────────────────────────────────
+function injectPrizeZoneDots() {
+  if (!FEATURES.prizeZoneDots) return;
+  document.querySelectorAll('.lb-row').forEach(row => {
+    if (row.querySelector('.prize-dot')) return;
+    const rankEl = row.querySelector('.lb-rank');
+    if (!rankEl) return;
+    const rank = parseInt(rankEl.textContent);
+    const col = rank === 1 ? 'rgba(255,210,60,1)' : rank === 2 ? 'rgba(200,220,255,1)' : rank === 3 ? 'rgba(220,150,60,1)' : rank <= 20 ? 'rgba(0,220,100,.9)' : 'rgba(255,255,255,.15)';
+    const glow = rank <= 3 ? `0 0 6px ${col}` : rank <= 20 ? '0 0 4px rgba(0,220,100,.5)' : 'none';
+    const dot = document.createElement('span');
+    dot.className = 'prize-dot';
+    dot.style.cssText = `width:6px;height:6px;border-radius:50%;background:${col};box-shadow:${glow};flex-shrink:0;margin-right:6px;display:inline-block;`;
+    rankEl.parentNode.insertBefore(dot, rankEl);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #05 · PRIZE BREAKDOWN HOVER TOOLTIP
+// Hover any table row → small popup shows the hovered player's prize
+// and the full breakdown for all 20 spots.
+// ─────────────────────────────────────────────────────────────────────
+const PRIZE_BREAKDOWN = [250,200,150,75,50,35,35,35,35,35,10,10,10,10,10,10,10,10,10,10];
+let _tooltip = null;
+function setupPrizeTooltip() {
+  if (!FEATURES.prizeTooltip) return;
+  if (document.getElementById('prize-tooltip')) return;
+  _tooltip = document.createElement('div');
+  _tooltip.id = 'prize-tooltip';
+  _tooltip.style.cssText = `position:fixed;z-index:200;background:#0d0e18;border:1px solid rgba(150,120,255,.3);
+    border-radius:10px;padding:12px 14px;font-family:var(--font-m);font-size:10px;letter-spacing:1px;
+    color:rgba(200,180,255,.8);pointer-events:none;display:none;min-width:160px;
+    box-shadow:0 0 24px rgba(120,90,255,.3),0 4px 20px rgba(0,0,0,.6);`;
+  document.body.appendChild(_tooltip);
+
+  document.querySelectorAll('.lb-row').forEach(row => {
+    const rankEl = row.querySelector('.lb-rank');
+    if (!rankEl) return;
+    const rank = parseInt(rankEl.textContent);
+    const prize = PRIZE_BREAKDOWN[rank - 1];
+    row.addEventListener('mouseenter', e => {
+      const lines = PRIZE_BREAKDOWN.map((p, i) => {
+        const active = (i + 1) === rank;
+        return `<div style="padding:2px 0;${active ? 'color:#fff;font-weight:700;' : ''}">
+          ${active ? '▶ ' : ''}#${i + 1} — $${p}${active ? ' ← YOU' : ''}</div>`;
+      }).join('');
+      _tooltip.innerHTML = `<div style="margin-bottom:8px;color:#fff;font-size:11px;">PRIZE BREAKDOWN</div>${lines}`;
+      _tooltip.style.display = 'block';
+    });
+    row.addEventListener('mousemove', e => {
+      _tooltip.style.left = (e.clientX + 14) + 'px';
+      _tooltip.style.top  = Math.min(e.clientY - 10, window.innerHeight - _tooltip.offsetHeight - 10) + 'px';
+    });
+    row.addEventListener('mouseleave', () => { _tooltip.style.display = 'none'; });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #06 · SHARE / COPY REFERRAL BUTTON
+// Appends a small button near the status row that copies the page URL
+// + "Use code HANVEE on Stake.com" to clipboard with a ✓ flash.
+// ─────────────────────────────────────────────────────────────────────
+const HANVEE_CODE = 'HANVEE';
+function injectShareButton() {
+  if (!FEATURES.shareButton || document.getElementById('share-btn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'share-btn';
+  btn.textContent = '⬡ COPY CODE';
+  btn.style.cssText = `font-family:var(--font-m);font-size:9px;letter-spacing:2px;padding:5px 12px;
+    border-radius:20px;background:rgba(255,200,0,.06);border:1px solid rgba(255,200,0,.2);
+    color:rgba(255,220,120,.8);cursor:pointer;transition:all .2s;`;
+  btn.onmouseenter = () => btn.style.background = 'rgba(255,200,0,.12)';
+  btn.onmouseleave = () => btn.style.background = 'rgba(255,200,0,.06)';
+  btn.onclick = () => {
+    const text = `Use code ${HANVEE_CODE} on Stake.com — ${window.location.href}`;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ COPIED!';
+      btn.style.color = 'rgba(0,255,120,.9)';
+      btn.style.borderColor = 'rgba(0,200,80,.3)';
+      setTimeout(() => { btn.textContent = '⬡ COPY CODE'; btn.style.color = 'rgba(255,220,120,.8)'; btn.style.borderColor = 'rgba(255,200,0,.2)'; }, 2000);
+    });
+  };
+  const statusRow = document.querySelector('.status-row');
+  if (statusRow) statusRow.after(btn);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #07 · SORTABLE TABLE COLUMNS
+// Click "Wagered" or "Prize" header cell to toggle asc/desc sort.
+// Arrow indicator shows active column and direction.
+// ─────────────────────────────────────────────────────────────────────
+let _sortCol = 'wager', _sortDir = -1; // -1=desc, 1=asc
+function setupSortableColumns() {
+  if (!FEATURES.sortableColumns) return;
+  const wagerHeader = document.querySelector('.lb-header-wager');
+  const prizeHeader = document.querySelector('.lb-header-prize');
+  [wagerHeader, prizeHeader].forEach((h, idx) => {
+    if (!h) return;
+    h.style.cursor = 'pointer';
+    h.style.userSelect = 'none';
+    h.addEventListener('click', () => {
+      const col = idx === 0 ? 'wager' : 'prize';
+      if (_sortCol === col) _sortDir *= -1; else { _sortCol = col; _sortDir = -1; }
+      [wagerHeader, prizeHeader].forEach(el => { if (el) el.textContent = el === h ? (col.toUpperCase() + (_sortDir === -1 ? ' ↓' : ' ↑')) : (idx === 0 ? 'PRIZE' : 'WAGERED'); });
+      const sorted = [...allPlayers].sort((a, b) => {
+        if (_sortCol === 'wager') return _sortDir * (b.score - a.score);
+        return _sortDir * ((PRIZE_BREAKDOWN[a.rank - 1] || 0) - (PRIZE_BREAKDOWN[b.rank - 1] || 0));
+      });
+      buildTable(sorted, document.getElementById('searchBox')?.value || '');
+      setupSortableColumns();
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #08 · REFRESH COUNTDOWN
+// Replaces the static "Updated X" with a live "refreshing in Ns"
+// countdown. Turns orange at 5s, flashes on refresh.
+// ─────────────────────────────────────────────────────────────────────
+let _refreshCountdownIv = null;
+function startRefreshCountdown() {
+  if (!FEATURES.refreshCountdown) return;
+  if (_refreshCountdownIv) clearInterval(_refreshCountdownIv);
+  let remaining = Math.floor(REFRESH_MS / 1000);
+  const el = document.getElementById('lastUpdate');
+  if (!el) return;
+  _refreshCountdownIv = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      el.textContent = '⟳ Refreshing…';
+      el.style.color = 'rgba(255,255,255,.9)';
+      clearInterval(_refreshCountdownIv);
+    } else {
+      el.textContent = `Refreshing in ${remaining}s`;
+      el.style.color = remaining <= 5 ? 'rgba(255,160,50,.9)' : '';
+    }
+  }, 1000);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #09 · PER-PLAYER WAGER SPARKLINES
+// Reads a 7-day history from localStorage (keyed by username + date).
+// Each refresh appends today's wager. Renders a 60×18px SVG trend line.
+// ─────────────────────────────────────────────────────────────────────
+function saveSparklineData(players) {
+  if (!FEATURES.sparklines) return;
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    const stored = JSON.parse(localStorage.getItem('hanvee_sparklines') || '{}');
+    players.forEach(p => {
+      if (!stored[p.name]) stored[p.name] = {};
+      stored[p.name][today] = p.score;
+      const days = Object.keys(stored[p.name]).sort().slice(-7);
+      const trimmed = {};
+      days.forEach(d => { trimmed[d] = stored[p.name][d]; });
+      stored[p.name] = trimmed;
+    });
+    localStorage.setItem('hanvee_sparklines', JSON.stringify(stored));
+  } catch(e) {}
+}
+function getSparklineSVG(name) {
+  try {
+    const stored = JSON.parse(localStorage.getItem('hanvee_sparklines') || '{}');
+    const data = stored[name];
+    if (!data) return '';
+    const vals = Object.keys(data).sort().map(d => data[d]);
+    if (vals.length < 2) return '';
+    const min = Math.min(...vals), max = Math.max(...vals);
+    const range = max - min || 1;
+    const W = 60, H = 18, pad = 2;
+    const pts = vals.map((v, i) => {
+      const x = pad + (i / (vals.length - 1)) * (W - pad * 2);
+      const y = H - pad - ((v - min) / range) * (H - pad * 2);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    const up = vals[vals.length - 1] >= vals[0];
+    const col = up ? 'rgba(0,220,100,.8)' : 'rgba(255,80,80,.8)';
+    return `<svg width="${W}" height="${H}" style="flex-shrink:0;opacity:.8"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+  } catch(e) { return ''; }
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #10 · GAP TO NEXT
+// Adds a muted "$X,XXX to #N" label to each row showing how much more
+// wagering is needed to overtake the player directly above.
+// ─────────────────────────────────────────────────────────────────────
+function injectGapToNext(players) {
+  if (!FEATURES.gapToNext) return;
+  document.querySelectorAll('.lb-row').forEach(row => {
+    if (row.querySelector('.gap-to-next')) return;
+    const rankEl = row.querySelector('.lb-rank');
+    if (!rankEl) return;
+    const rank = parseInt(rankEl.textContent);
+    if (rank <= 1) return;
+    const above = players.find(p => p.rank === rank - 1);
+    const me    = players.find(p => p.rank === rank);
+    if (!above || !me) return;
+    const gap = above.score - me.score;
+    if (gap <= 0) return;
+    const el = document.createElement('span');
+    el.className = 'gap-to-next';
+    el.textContent = `$${Math.ceil(gap).toLocaleString()} → #${rank - 1}`;
+    el.style.cssText = `font-family:var(--font-m);font-size:8px;letter-spacing:1px;color:rgba(160,140,200,.45);
+      white-space:nowrap;flex-shrink:0;`;
+    const prize = row.querySelector('.lb-prize');
+    if (prize) prize.after(el);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #11 · MONTH COMPARISON TOGGLE
+// Adds a toggle button that switches between current and last month.
+// Last month data loaded from /leaderboard/api.php?month=prev or
+// a static /leaderboard/archive/prev.json fallback.
+// ─────────────────────────────────────────────────────────────────────
+let _viewingPrev = false, _prevMonthData = null;
+function injectMonthToggle() {
+  if (!FEATURES.monthComparison || document.getElementById('month-toggle')) return;
+  const btn = document.createElement('button');
+  btn.id = 'month-toggle';
+  btn.textContent = '◷ LAST MONTH';
+  btn.style.cssText = `font-family:var(--font-m);font-size:9px;letter-spacing:2px;padding:5px 12px;
+    border-radius:20px;background:rgba(150,120,255,.06);border:1px solid rgba(150,120,255,.2);
+    color:rgba(180,160,255,.7);cursor:pointer;margin-left:8px;`;
+  btn.onclick = async () => {
+    _viewingPrev = !_viewingPrev;
+    btn.textContent = _viewingPrev ? '◎ CURRENT' : '◷ LAST MONTH';
+    if (_viewingPrev) {
+      if (!_prevMonthData) {
+        try {
+          const now = new Date();
+          const r = await fetch(`/leaderboard/archive/${now.getFullYear()}-${String(now.getMonth()).padStart(2,'0')}.json`, { cache: 'no-store' });
+          if (r.ok) _prevMonthData = await r.json();
+        } catch(e) { _prevMonthData = []; }
+      }
+      if (_prevMonthData?.length) { buildPodium(_prevMonthData); buildTable(_prevMonthData, ''); }
+      else { alert('Last month archive not available yet.'); _viewingPrev = false; btn.textContent = '◷ LAST MONTH'; }
+    } else {
+      buildPodium(allPlayers); buildTable(allPlayers, document.getElementById('searchBox')?.value || '');
+    }
+  };
+  document.querySelector('.status-row')?.appendChild(btn);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #12 · MONTH-END WINNER ANNOUNCEMENT MODAL
+// When the countdown timer reaches 00:00:00, fires a full-screen
+// confetti overlay with top-3 winners and their prizes.
+// ─────────────────────────────────────────────────────────────────────
+let _winnerModalFired = false;
+function checkWinnerModal() {
+  if (!FEATURES.winnerModal || _winnerModalFired) return;
+  const diff = END_TIME - Date.now();
+  if (diff > 0) return;
+  _winnerModalFired = true;
+  const modal = document.createElement('div');
+  modal.style.cssText = `position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.88);display:flex;
+    flex-direction:column;align-items:center;justify-content:center;`;
+  const top3 = allPlayers.slice(0, 3);
+  const medals = ['🥇','🥈','🥉'];
+  const prizes = [250,200,150];
+  modal.innerHTML = `
+    <div style="font-family:var(--font-d);font-size:48px;letter-spacing:6px;text-align:center;
+      color:#fff;text-shadow:0 0 20px rgba(255,200,0,.9),0 0 50px rgba(255,160,0,.6);">
+      LEADERBOARD CLOSED
+    </div>
+    <div style="font-family:var(--font-m);font-size:11px;letter-spacing:3px;color:rgba(255,220,120,.7);margin:12px 0 32px;">
+      FINAL RESULTS
+    </div>
+    ${top3.map((p, i) => `
+      <div style="font-family:var(--font-d);font-size:${i===0?32:24}px;letter-spacing:2px;margin:6px 0;color:#fff;
+        text-shadow:0 0 10px rgba(255,200,80,.8);">
+        ${medals[i]} ${p.name} — $${prizes[i].toLocaleString()}
+      </div>`).join('')}
+    <button onclick="this.parentNode.remove()" style="margin-top:36px;font-family:var(--font-m);
+      font-size:10px;letter-spacing:2px;padding:8px 24px;border-radius:20px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);
+      color:rgba(255,255,255,.7);cursor:pointer;">DISMISS</button>`;
+  document.body.appendChild(modal);
+  // Basic confetti
+  const cc = document.createElement('canvas');
+  cc.style.cssText = 'position:fixed;inset:0;z-index:1000;pointer-events:none;';
+  cc.width = window.innerWidth; cc.height = window.innerHeight;
+  document.body.appendChild(cc);
+  const cx = cc.getContext('2d');
+  const particles = Array.from({length:120}, () => ({
+    x: Math.random()*cc.width, y: -20, vx: (Math.random()-.5)*3,
+    vy: 2+Math.random()*3, col: `hsl(${Math.random()*60+30},90%,60%)`,
+    r: 4+Math.random()*4, spin: Math.random()*0.2
+  }));
+  let frame;
+  (function loop() {
+    cx.clearRect(0,0,cc.width,cc.height);
+    particles.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy; p.spin+=0.05;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.spin);
+      cx.fillStyle=p.col; cx.fillRect(-p.r/2,-p.r/2,p.r,p.r);
+      cx.restore();
+    });
+    if (particles.some(p=>p.y<cc.height)) { frame = requestAnimationFrame(loop); }
+    else { cc.remove(); }
+  })();
+  setTimeout(() => { cancelAnimationFrame(frame); cc.remove(); modal.remove(); }, 10000);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #13 · MOBILE STICKY PODIUM STRIP
+// On screens ≤600px, a sticky bar below the Okie header shows
+// all 3 names + wagered amounts in a compact single row.
+// ─────────────────────────────────────────────────────────────────────
+function injectMobileStickyPodium(players) {
+  if (!FEATURES.mobileStickyPodium) return;
+  const strip = document.getElementById('mobile-sticky-podium') || document.createElement('div');
+  strip.id = 'mobile-sticky-podium';
+  strip.style.cssText = `position:sticky;top:0;z-index:100;width:100%;
+    background:rgba(7,8,13,.92);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(150,120,255,.15);
+    display:none;align-items:center;justify-content:space-around;padding:6px 12px;`;
+  const top3 = players.slice(0, 3);
+  const medals = ['🥇','🥈','🥉'];
+  strip.innerHTML = top3.map((p, i) => `
+    <div style="text-align:center;flex:1;">
+      <div style="font-size:12px;">${medals[i]}</div>
+      <div style="font-family:var(--font-u);font-weight:700;font-size:11px;color:#fff;
+        letter-spacing:.5px;">${sanitize(p.name)}</div>
+      <div style="font-family:var(--font-d);font-size:13px;color:rgba(200,180,255,.7);">
+        $${Math.floor(p.score).toLocaleString()}</div>
+    </div>`).join('');
+  if (!document.getElementById('mobile-sticky-podium')) {
+    const scene = document.querySelector('.scene');
+    if (scene) scene.before(strip);
+  }
+  const mq = window.matchMedia('(max-width:600px)');
+  const apply = () => { strip.style.display = mq.matches ? 'flex' : 'none'; };
+  apply(); mq.addEventListener('change', apply);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #14 · PLAYER LOOKUP ("FIND MY RANK")
+// Injects a text input above the table. Typing a username highlights
+// that row with a glow, scrolls to it, and shows a stat card.
+// ─────────────────────────────────────────────────────────────────────
+function injectPlayerLookup() {
+  if (!FEATURES.playerLookup || document.getElementById('player-lookup-wrap')) return;
+  const wrap = document.createElement('div');
+  wrap.id = 'player-lookup-wrap';
+  wrap.style.cssText = `width:100%;max-width:680px;margin:0 auto 10px;display:flex;gap:8px;align-items:center;`;
+  const input = document.createElement('input');
+  input.type = 'text'; input.placeholder = '🎯 Find my rank…';
+  input.style.cssText = `flex:1;padding:8px 14px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,200,0,.18);border-radius:8px;color:#fff;
+    font-family:var(--font-m);font-size:10px;letter-spacing:1px;outline:none;`;
+  input.oninput = () => {
+    const q = input.value.trim().toLowerCase();
+    document.querySelectorAll('.lb-row').forEach(row => { row.style.boxShadow = ''; });
+    document.getElementById('lookup-result-card')?.remove();
+    if (!q) return;
+    const found = allPlayers.find(p => p.name.toLowerCase().includes(q));
+    if (!found) return;
+    const row = document.querySelector(`.lb-row[data-name="${CSS.escape(found.name)}"]`);
+    if (row) {
+      row.style.boxShadow = '0 0 0 2px rgba(255,200,0,.5), 0 0 20px rgba(255,200,0,.2)';
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    const card = document.createElement('div');
+    card.id = 'lookup-result-card';
+    const prize = PRIZE_BREAKDOWN[found.rank - 1] || 0;
+    const above = allPlayers.find(p => p.rank === found.rank - 1);
+    const gap = above ? Math.ceil(above.score - found.score) : 0;
+    card.style.cssText = `background:rgba(255,200,0,.05);border:1px solid rgba(255,200,0,.2);
+      border-radius:10px;padding:10px 14px;font-family:var(--font-m);font-size:10px;
+      letter-spacing:1px;color:rgba(255,220,120,.8);margin-top:8px;max-width:680px;margin-left:auto;margin-right:auto;`;
+    card.innerHTML = `<b style="font-size:12px;color:#fff">${sanitize(found.name)}</b> &nbsp;·&nbsp; Rank #${found.rank}
+      &nbsp;·&nbsp; Prize: <b style="color:rgba(0,220,100,.9)">$${prize}</b>
+      ${gap > 0 ? `&nbsp;·&nbsp; <span style="color:rgba(160,140,200,.6)">$${gap.toLocaleString()} to #${found.rank-1}</span>` : '&nbsp;·&nbsp; <span style="color:rgba(255,200,0,.8)">👑 LEADER</span>'}`;
+    wrap.after(card);
+  };
+  wrap.appendChild(input);
+  const searchWrap = document.getElementById('searchWrap');
+  if (searchWrap) searchWrap.before(wrap);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #15 · WAGER VELOCITY ($/HR) ON PODIUM CARDS
+// Divides total wager by days elapsed this month to get $/hr pace.
+// Shows below each card. Adds 🔥 if their pace would win first place.
+// ─────────────────────────────────────────────────────────────────────
+function injectWagerVelocity(players) {
+  if (!FEATURES.wagerVelocity) return;
+  const now = new Date();
+  const elapsed = (now - new Date(now.getFullYear(), now.getMonth(), 1)) / 3600000;
+  if (elapsed < 1) return;
+  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  const hoursLeft = (monthEnd - now) / 3600000;
+  const leader = players[0];
+  [['card-gold', 0], ['card-silver', 1], ['card-bronze', 2]].forEach(([id, idx]) => {
+    const card = document.getElementById(id);
+    if (!card || !players[idx] || card.querySelector('.wager-velocity')) return;
+    const p = players[idx];
+    const rate = p.score / elapsed;
+    const proj = p.score + rate * hoursLeft;
+    const isOnTrack = idx > 0 && proj > leader.score;
+    const el = document.createElement('div');
+    el.className = 'wager-velocity';
+    el.style.cssText = `font-family:var(--font-m);font-size:8px;letter-spacing:1px;
+      color:rgba(255,255,255,.5);text-align:center;margin-top:4px;position:relative;z-index:6;`;
+    el.textContent = `$${Math.floor(rate).toLocaleString()}/hr${isOnTrack ? ' 🔥' : ''}`;
+    card.querySelector('.card-inner')?.appendChild(el);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #16 · PRIZE POOL BREAKDOWN BAR
+// Full-width segmented bar in the header. Each segment sized by prize
+// amount, color-coded gold/silver/bronze/green/gray.
+// ─────────────────────────────────────────────────────────────────────
+function injectPrizePoolBar() {
+  if (!FEATURES.prizePoolBar || document.getElementById('prize-pool-bar')) return;
+  const total = PRIZE_BREAKDOWN.reduce((a, b) => a + b, 0);
+  const segments = [
+    { label: '🥇$250', amount: 250, color: 'linear-gradient(90deg,rgba(255,210,40,.9),rgba(255,170,0,.8))' },
+    { label: '🥈$200', amount: 200, color: 'linear-gradient(90deg,rgba(200,215,255,.7),rgba(160,180,240,.6))' },
+    { label: '🥉$150', amount: 150, color: 'linear-gradient(90deg,rgba(220,140,50,.8),rgba(180,100,20,.7))' },
+    { label: '#4 $75', amount: 75,  color: 'rgba(100,200,120,.5)' },
+    { label: '#5 $50', amount: 50,  color: 'rgba(80,180,100,.4)' },
+    { label: '#6–10', amount: 175,  color: 'rgba(60,160,80,.3)' },
+    { label: '#11–20', amount: 100, color: 'rgba(40,100,60,.25)' },
+  ];
+  const bar = document.createElement('div');
+  bar.id = 'prize-pool-bar';
+  bar.style.cssText = `display:flex;width:100%;max-width:1020px;height:20px;border-radius:10px;
+    overflow:hidden;margin:0 auto 16px;position:relative;z-index:10;`;
+  segments.forEach(seg => {
+    const w = (seg.amount / total * 100).toFixed(2);
+    const s = document.createElement('div');
+    s.style.cssText = `width:${w}%;background:${seg.color};display:flex;align-items:center;
+      justify-content:center;font-family:var(--font-m);font-size:7px;letter-spacing:.5px;
+      color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;`;
+    if (parseFloat(w) > 8) s.textContent = seg.label;
+    bar.appendChild(s);
+  });
+  const scene = document.querySelector('.scene');
+  const statusRow = document.querySelector('.status-row');
+  if (statusRow) statusRow.after(bar);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #17 · REFERRAL CTA SECTION
+// Styled card below the leaderboard table with Hanvee's code,
+// a copy button, and a Stake.com link. Matches page aesthetic.
+// ─────────────────────────────────────────────────────────────────────
+function injectReferralCTA() {
+  if (!FEATURES.referralCTA || document.getElementById('referral-cta')) return;
+  const cta = document.createElement('div');
+  cta.id = 'referral-cta';
+  cta.style.cssText = `width:100%;max-width:680px;margin:24px auto 0;padding:20px 24px;
+    background:rgba(255,200,0,.04);border:1px solid rgba(255,200,0,.18);border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;z-index:10;`;
+  cta.innerHTML = `
+    <div style="font-family:var(--font-d);font-size:22px;letter-spacing:3px;color:#fff;
+      text-shadow:0 0 8px rgba(255,200,0,.6);">PLAY ON STAKE.COM</div>
+    <div style="font-family:var(--font-m);font-size:9px;letter-spacing:2px;color:rgba(255,220,120,.6);">
+      USE REFERRAL CODE TO JOIN HANVEE'S LEADERBOARD</div>
+    <div style="display:flex;align-items:center;gap:12px;margin:4px 0;">
+      <div id="cta-code" style="font-family:var(--font-d);font-size:36px;letter-spacing:6px;color:#fff;
+        text-shadow:0 0 10px rgba(255,200,0,.8),0 0 28px rgba(255,160,0,.5);">${HANVEE_CODE}</div>
+      <button id="cta-copy" style="font-family:var(--font-m);font-size:9px;letter-spacing:2px;
+        padding:5px 14px;border-radius:20px;background:rgba(255,200,0,.1);
+        border:1px solid rgba(255,200,0,.3);color:rgba(255,220,120,.9);cursor:pointer;">COPY</button>
+    </div>
+    <a href="https://stake.com/?c=${HANVEE_CODE}" target="_blank" style="font-family:var(--font-m);
+      font-size:9px;letter-spacing:2px;color:rgba(200,180,255,.5);text-decoration:none;">
+      stake.com/?c=${HANVEE_CODE} ↗</a>`;
+  cta.querySelector('#cta-copy').onclick = () => {
+    navigator.clipboard.writeText(HANVEE_CODE).then(() => {
+      const btn = cta.querySelector('#cta-copy');
+      btn.textContent = '✓ COPIED'; btn.style.color = 'rgba(0,255,120,.9)';
+      setTimeout(() => { btn.textContent = 'COPY'; btn.style.color = 'rgba(255,220,120,.9)'; }, 2000);
+    });
+  };
+  const lbSection = document.getElementById('lbSection');
+  if (lbSection) lbSection.after(cta);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #18 · ARCHIVE DROPDOWN
+// Injects a dropdown in the status row to load past month finals.
+// Expects static JSON at /leaderboard/archive/YYYY-MM.json
+// ─────────────────────────────────────────────────────────────────────
+function injectArchiveDropdown() {
+  if (!FEATURES.archiveDropdown || document.getElementById('archive-select')) return;
+  const now = new Date();
+  const options = Array.from({length:6}, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() - i - 1, 1);
+    const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    return `<option value="${val}">${label}</option>`;
+  }).join('');
+  const wrap = document.createElement('div');
+  wrap.style.cssText = `display:flex;align-items:center;gap:6px;`;
+  wrap.innerHTML = `
+    <label style="font-family:var(--font-m);font-size:9px;letter-spacing:2px;color:rgba(200,180,255,.5);">ARCHIVE</label>
+    <select id="archive-select" style="font-family:var(--font-m);font-size:9px;letter-spacing:1px;
+      padding:4px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(150,120,255,.2);
+      border-radius:6px;color:rgba(200,180,255,.7);cursor:pointer;">
+      <option value="">— Current Month —</option>${options}
+    </select>`;
+  wrap.querySelector('#archive-select').onchange = async (e) => {
+    if (!e.target.value) { buildPodium(allPlayers); buildTable(allPlayers, ''); return; }
+    try {
+      const r = await fetch(`/leaderboard/archive/${e.target.value}.json`, { cache: 'no-store' });
+      if (!r.ok) throw new Error('Not found');
+      const data = await r.json();
+      buildPodium(data); buildTable(data, '');
+    } catch(err) { alert(`Archive for ${e.target.value} not available.`); e.target.value = ''; }
+  };
+  document.querySelector('.status-row')?.appendChild(wrap);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #19 · OBS OVERLAY MODE (?obs=1)
+// When ?obs=1 is in the URL, strips all backgrounds, canvas effects,
+// headers, footers, and UI chrome. Leaves only podium + top-5 table
+// on a transparent background for direct OBS browser source use.
+// ─────────────────────────────────────────────────────────────────────
+function applyOBSMode() {
+  if (!FEATURES.obsOverlayMode) return;
+  if (!new URLSearchParams(window.location.search).get('obs')) return;
+  // Kill all background canvases
+  ['bg-canvas','arc-canvas','ripple-canvas'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  // Transparent body
+  document.body.style.background = 'transparent';
+  document.body.style.paddingBottom = '0';
+  // Hide chrome
+  ['.okie-top-bar','.status-row','.search-wrap','.timer-block','.okie-footer','.stake-brand'].forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => { el.style.display = 'none'; });
+  });
+  // Compact layout
+  const scene = document.querySelector('.scene');
+  if (scene) { scene.style.padding = '12px 16px 0'; }
+  // Limit table to top 5 only (injected after buildTable)
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// #20 · PROJECTED END-OF-MONTH RANK BADGES
+// Based on current wager ÷ days elapsed × days remaining, projects
+// each player's final wager and shows "Proj: #N" badge on their row.
+// ─────────────────────────────────────────────────────────────────────
+function injectProjectedRanks(players) {
+  if (!FEATURES.projectedRanks) return;
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthEnd   = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  const elapsed = (now - monthStart) / 86400000;
+  const remaining = (monthEnd - now) / 86400000;
+  if (elapsed < 0.5) return;
+
+  const projected = players.map(p => ({
+    ...p,
+    projScore: p.score + (p.score / elapsed) * remaining
+  })).sort((a, b) => b.projScore - a.projScore).map((p, i) => ({ name: p.name, projRank: i + 1 }));
+
+  const projMap = {};
+  projected.forEach(p => { projMap[p.name] = p.projRank; });
+
+  document.querySelectorAll('.lb-row').forEach(row => {
+    if (row.querySelector('.proj-rank')) return;
+    const nameEl = row.querySelector('.lb-name');
+    if (!nameEl) return;
+    const name = row.dataset.name;
+    const projRank = projMap[name];
+    if (!projRank) return;
+    const currentRank = players.find(p => p.name === name)?.rank;
+    const delta = currentRank - projRank;
+    const el = document.createElement('span');
+    el.className = 'proj-rank';
+    el.style.cssText = `font-family:var(--font-m);font-size:8px;letter-spacing:1px;
+      color:${delta > 0 ? 'rgba(0,220,100,.6)' : delta < 0 ? 'rgba(255,80,80,.6)' : 'rgba(200,180,255,.4)'};
+      white-space:nowrap;flex-shrink:0;margin-left:4px;`;
+    el.textContent = `→#${projRank}`;
+    nameEl.after(el);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════
+//  HOOK ALL FEATURES INTO THE RENDER PIPELINE
+//  These run after buildPodium() and buildTable() complete.
+// ════════════════════════════════════════════════════════════════════════
+const _origBuildPodium = buildPodium;
+buildPodium = function(players) {
+  _origBuildPodium(players);
+  triggerPodiumEntrance();
+  injectPodiumWagerBars(players);
+  injectMobileStickyPodium(players);
+  injectWagerVelocity(players);
+};
+
+const _origBuildTable = buildTable;
+buildTable = function(players, q) {
+  _origBuildTable(players, q);
+  applyRankChangeAnimations(players);
+  injectPrizeZoneDots();
+  setupPrizeTooltip();
+  injectGapToNext(players);
+  setupSortableColumns();
+  saveSparklineData(players);
+  injectProjectedRanks(players);
+  if (FEATURES.obsOverlayMode) {
+    const lbRows = document.querySelectorAll('.lb-row');
+    lbRows.forEach((r, i) => { if (i >= 5) r.style.display = 'none'; });
+  }
+};
+
+const _origFetchAndRender = fetchAndRender;
+fetchAndRender = async function() {
+  await _origFetchAndRender();
+  startRefreshCountdown();
+  injectShareButton();
+  injectMonthToggle();
+  injectPlayerLookup();
+  injectPrizePoolBar();
+  injectReferralCTA();
+  injectArchiveDropdown();
+  checkWinnerModal();
+};
+
+// CSS for rank-change animations (injected once)
+const _featureCSS = document.createElement('style');
+_featureCSS.textContent = `
+  @keyframes rankRowFlashUp   { 0%{background:rgba(0,220,100,.15)} 100%{background:transparent} }
+  @keyframes rankRowFlashDown { 0%{background:rgba(255,60,60,.15)}  100%{background:transparent} }
+  @keyframes rankDeltaFade    { 0%{opacity:1} 70%{opacity:1} 100%{opacity:0} }
+`;
+document.head.appendChild(_featureCSS);
+
+// Boot OBS mode immediately (before any rendering)
+applyOBSMode();
+
+fetchAndRender();
+setInterval(fetchAndRender, REFRESH_MS);
+</script>
+
+<!-- ═══ OKIE.DIGITAL · FOOTER ═══ -->
+<div class="okie-footer">
+  <div class="okie-footer-love">Made with <span class="heart">♥</span> by</div>
+  <div class="okie-footer-logo">
+    <span class="okie-footer-text">OKIE<span class="odot">.</span>DIGITAL<span class="odot">.</span>⭐<span class="otm">™</span></span>
+  </div>
+  <div class="okie-divider"></div>
+  <div class="okie-copy">© 2026 Hanvee™ · All rights reserved · Stake.com Leaderboard</div>
+</div>
+</body>
+</html>
