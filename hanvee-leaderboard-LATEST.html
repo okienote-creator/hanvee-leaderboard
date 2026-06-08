@@ -30,6 +30,11 @@
 /* top bar */
 }
 
+.okie-site-title{display:flex;flex-direction:column;align-items:center;gap:0px;}
+.okie-site-name{font-family:var(--font-d);font-size:38px;font-weight:900;letter-spacing:6px;color:#fff;
+  text-shadow:0 0 8px #fff,0 0 20px rgba(200,170,255,.9),0 0 50px rgba(160,120,255,.6);line-height:1;}
+.okie-site-sub{font-family:var(--font-d);font-size:16px;letter-spacing:8px;color:rgba(200,180,255,.7);
+  text-shadow:0 0 6px rgba(180,150,255,.5);}
 .okie-top-bar{width:100%;z-index:20;position:relative;padding:13px 24px 10px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.04);}
 .okie-top-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(160,100,255,.06) 0%,transparent 100%);pointer-events:none;}
 .okie-made-by{display:flex;flex-direction:column;align-items:center;gap:4px;}
@@ -722,16 +727,13 @@ body{
 
 <!-- ═══ TOP BAR ═══ -->
 <div class="okie-top-bar">
-  <div class="okie-made-by">
-    <div class="okie-made-line">made by</div>
-    <div class="okie-logo-wrap">
-      <span class="okie-logo-text">OKIE<span class="odot">.</span>DIGITAL<span class="odot">.</span>⭐<span class="otm">™</span></span>
-    </div>
+  <div class="okie-site-title">
+    <div class="okie-site-name">HANVEE</div>
+    <div class="okie-site-sub">LEADERBOARD</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="title-wrap"><span class="title">LEADERBOARD</span><span class="title-tm">™</span></div>
   <div class="subtitle">STAKE.COM · MONTHLY CHALLENGE</div>
 
   <div class="prize-pool-badge">
