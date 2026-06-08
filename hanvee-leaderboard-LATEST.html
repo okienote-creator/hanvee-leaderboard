@@ -793,6 +793,34 @@ body{
 //  Matches the existing /leaderboard/api.php exactly
 // ═══════════════════════════════════════════════════════════
 const API_URL     = '/leaderboard/api.php';
+
+// ─── MOCK DATA — remove this block and set USE_MOCK=false when api.php is ready ───
+const USE_MOCK = true;
+const MOCK_DATA = {
+  users: [
+    { username: 'Kro_Plays',      scaled_total_amount_bet: 207265.42, level: 87, rank: 'Diamond' },
+    { username: 'MaxWagered',     scaled_total_amount_bet: 134882.10, level: 74, rank: 'Platinum' },
+    { username: 'IamStaking',     scaled_total_amount_bet: 98451.77,  level: 68, rank: 'Platinum' },
+    { username: 'HighRoller99',   scaled_total_amount_bet: 74320.50,  level: 61, rank: 'Gold'     },
+    { username: 'StakeKing',      scaled_total_amount_bet: 55100.00,  level: 55, rank: 'Gold'     },
+    { username: 'BetMaster',      scaled_total_amount_bet: 41800.25,  level: 49, rank: 'Silver'   },
+    { username: 'NightOwlBets',   scaled_total_amount_bet: 33600.80,  level: 44, rank: 'Silver'   },
+    { username: 'GrindDaily',     scaled_total_amount_bet: 27430.15,  level: 40, rank: 'Silver'   },
+    { username: 'SlotDestroyer',  scaled_total_amount_bet: 21900.60,  level: 36, rank: 'Bronze'   },
+    { username: 'CasinoLord',     scaled_total_amount_bet: 17200.40,  level: 32, rank: 'Bronze'   },
+    { username: 'WageMachineX',   scaled_total_amount_bet: 12300.90,  level: 28, rank: 'Bronze'   },
+    { username: 'BonusHunter',    scaled_total_amount_bet:  9400.35,  level: 25, rank: 'Bronze'   },
+    { username: 'DiceRoller7',    scaled_total_amount_bet:  7100.20,  level: 22, rank: 'Bronze'   },
+    { username: 'RouletteKing',   scaled_total_amount_bet:  5200.75,  level: 19, rank: 'Bronze'   },
+    { username: 'AllInAndy',      scaled_total_amount_bet:  3800.50,  level: 16, rank: 'Bronze'   },
+    { username: 'SpinCycle',      scaled_total_amount_bet:  2600.10,  level: 13, rank: 'Bronze'   },
+    { username: 'TableTurner',    scaled_total_amount_bet:  1700.80,  level: 11, rank: 'Bronze'   },
+    { username: 'ParlayKing',     scaled_total_amount_bet:   950.40,  level:  9, rank: 'Bronze'   },
+    { username: 'NightShiftBet',  scaled_total_amount_bet:   420.20,  level:  7, rank: 'Bronze'   },
+    { username: 'LastCallLarry',  scaled_total_amount_bet:   105.05,  level:  5, rank: 'Bronze'   },
+  ]
+};
+// ─────────────────────────────────────────────────────────────────────────────────
 const REFRESH_MS  = 30000; // 30 seconds (matches original)
 const TOTAL_PRIZE = 1000;
 const PRIZES = [250,200,150,75,50,50,40,35,30,25,15,15,15,10,10,10,5,5,5,5]; // 20 places · $1,000 total
@@ -1401,9 +1429,7 @@ setInterval(() => {
 // ═══════════════════════════════════════════════════════════
 async function fetchAndRender() {
   try {
-    const res = await fetch(API_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`API returned HTTP ${res.status}`);
-    const json = await res.json();
+    const json = USE_MOCK ? MOCK_DATA : await fetch(API_URL, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(`API returned HTTP ${r.status}`); return r.json(); });
     if (!json.users || !Array.isArray(json.users)) throw new Error('Unexpected API response shape');
 
     // Normalize to same shape as leaderboard.js
